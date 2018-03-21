@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
 
 namespace ThreadingApplication
 {
@@ -10,6 +11,6 @@ namespace ThreadingApplication
     {
         private Api api;
         private Database db;
-        public abstract 
+        public abstract Grid getView();
     }
 }

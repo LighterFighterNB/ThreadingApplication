@@ -8,5 +8,16 @@ namespace ThreadingApplication
 {
     class GUI
     {
+        private StateView state;
+
+        public GUI()
+        {
+
+        }
+
+        public void Context()
+        {
+
+        }
     }
 }
