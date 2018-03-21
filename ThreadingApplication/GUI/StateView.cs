@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace ThreadingApplication
 {
-    class StateView
+    interface StateView
     {
+        private const Api api = new Api();
+
     }
 }
