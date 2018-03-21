@@ -8,5 +8,9 @@ namespace ThreadingApplication
 {
     class Api
     {
+        pulbic test()
+        {
+            Console.WriteLine("test");
+        }
     }
 }
