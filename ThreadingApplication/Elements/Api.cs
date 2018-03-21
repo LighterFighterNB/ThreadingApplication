@@ -8,5 +8,22 @@ namespace ThreadingApplication
 {
     class Api
     {
+        private String apiString;
+
+        public API()
+        {
+
+        }
+
+        public Chart GetChart()
+        {
+
+        }
+
+        public Notification getNews()
+        {
+
+        }
+
     }
 }
