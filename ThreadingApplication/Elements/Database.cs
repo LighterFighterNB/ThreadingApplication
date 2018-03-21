@@ -20,12 +20,12 @@ namespace ThreadingApplication
             return false;
         }
 
-        public void addPreference(Preferance p)
+        public void addPreference(Preference p)
         {
 
         }
 
-        private List<Preferance> getPreferances()
+        private List<Preference> getPreferences()
         {
             return null;
         }
