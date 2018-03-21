@@ -6,7 +6,23 @@ using System.Threading.Tasks;
 
 namespace ThreadingApplication
 {
-    class Dashboard
+    class Dashboard: Element
     {
+        private List<Chart> charts;
+
+        public Dashboard(String name)
+        {
+
+        }
+
+        public void addChart(Chart c)
+        {
+
+        }
+
+        public List<Chart> getCharts()
+        {
+
+        }
     }
 }
