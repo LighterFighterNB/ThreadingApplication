@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace ThreadingApplication
 {
-    class Portfolio
+    class Portfolio: Element
     {
+        private String description;
+        private double amount;
+
+        public Portfolio(String name, String description)
+        {
+
+        }
     }
 }

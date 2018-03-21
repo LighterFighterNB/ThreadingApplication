@@ -96,14 +96,14 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\Chart.cs" />
+    <Compile Include="Elements\Chart.cs" />
     <Compile Include="GUI\ChatView.cs" />
-    <Compile Include="GUI\Dashboard.cs" />
+    <Compile Include="Elements\Dashboard.cs" />
     <Compile Include="GUI\DashboardView.cs" />
     <Compile Include="Elements\Database.cs" />
     <Compile Include="Elements\Element.cs" />
     <Compile Include="GUI\Graph.cs" />
-    <Compile Include="Elements\GUI.cs" />
+    <Compile Include="GUI\GUI.cs" />
     <Compile Include="GUI\LoginView.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -112,7 +112,7 @@
     <Compile Include="GUI\NotificationView.cs" />
     <Compile Include="Elements\Portfolio.cs" />
     <Compile Include="GUI\PortfolioView.cs" />
-    <Compile Include="Elements\Preferance.cs" />
+    <Compile Include="Elements\Preference.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GUI\StateView.cs" />
     <Compile Include="GUI\WelcomeView.cs" />
