@@ -8,9 +8,22 @@ namespace ThreadingApplication
 {
     class Api
     {
-        pulbic test()
+        private String apiString;
+
+        public API()
         {
-            Console.WriteLine("test");
+
         }
+
+        public Chart GetChart()
+        {
+
+        }
+
+        public Notification getNews()
+        {
+
+        }
+
     }
 }

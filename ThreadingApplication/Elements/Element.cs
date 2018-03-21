@@ -6,7 +6,15 @@ using System.Threading.Tasks;
 
 namespace ThreadingApplication
 {
-    class Element
+    abstract class Element
     {
+        protected String title;
+        protected Darabase bd;
+        protected API api;
+
+        public Database getDatabase()
+        {
+
+        }
     }
 }

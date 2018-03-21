@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ThreadingApplication
 {
-    class DashboardView
+    class DashboardView 
     {
     }
 }
