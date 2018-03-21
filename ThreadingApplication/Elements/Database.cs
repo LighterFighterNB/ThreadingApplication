@@ -17,7 +17,7 @@ namespace ThreadingApplication
 
         public bool checkUser(String user, String pass)
         {
-
+            return false;
         }
 
         public void addPreference(Preferance p)
@@ -27,7 +27,7 @@ namespace ThreadingApplication
 
         private List<Preferance> getPreferances()
         {
-
+            return null;
         }
 
         public void addDashboard(Dashboard d)
@@ -37,7 +37,7 @@ namespace ThreadingApplication
 
         public List<Dashboard> getDashboard()
         {
-
+            return null;
         }
 
         public void addChartToDashboard(Chart c, Dashboard d)

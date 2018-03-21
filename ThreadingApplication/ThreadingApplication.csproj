@@ -97,6 +97,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Elements\Chart.cs" />
+    <Compile Include="Elements\Preference.cs" />
     <Compile Include="GUI\ChatView.cs" />
     <Compile Include="Elements\Dashboard.cs" />
     <Compile Include="GUI\DashboardView.cs" />
@@ -112,7 +113,6 @@
     <Compile Include="GUI\NotificationView.cs" />
     <Compile Include="Elements\Portfolio.cs" />
     <Compile Include="GUI\PortfolioView.cs" />
-    <Compile Include="Elements\Preference.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GUI\StateView.cs" />
     <Compile Include="GUI\WelcomeView.cs" />

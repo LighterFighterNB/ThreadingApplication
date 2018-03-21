@@ -22,7 +22,7 @@ namespace ThreadingApplication
 
         public List<Chart> getCharts()
         {
-
+            return null;
         }
     }
 }

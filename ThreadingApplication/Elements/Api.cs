@@ -10,19 +10,18 @@ namespace ThreadingApplication
     {
         private String apiString;
 
-        public API()
+        public Api()
         {
-
         }
 
-        public Chart GetChart()
+        public Chart getChart()
         {
-
+            return null;
         }
 
         public Notification getNews()
         {
-
+            return null;
         }
 
     }

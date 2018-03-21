@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace ThreadingApplication
 {
-    class Preferance: Element
+    class Preference: Element
     {
         private List<String> prefs;
 
-        public Preferance(String name)
+        public Preference(String name)
         {
 
         }

@@ -10,7 +10,7 @@ namespace ThreadingApplication
     {
         private String fromCurrency;
         private String toCurrency;
-        private List<Data> data;
+        private List<String> data;
 
         public Chart(string name)
         {
