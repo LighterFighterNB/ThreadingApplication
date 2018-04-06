@@ -97,11 +97,12 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Elements\Chart.cs" />
+    <Compile Include="Elements\Database.cs" />
     <Compile Include="Elements\Preference.cs" />
+    <Compile Include="Elements\Stock.cs" />
     <Compile Include="GUI\ChatView.cs" />
     <Compile Include="Elements\Dashboard.cs" />
     <Compile Include="GUI\DashboardView.cs" />
-    <Compile Include="Elements\Database.cs" />
     <Compile Include="Elements\Element.cs" />
     <Compile Include="GUI\Graph.cs" />
     <Compile Include="GUI\GUI.cs" />
@@ -146,6 +147,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.6</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>11.0.2</Version>
     </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
