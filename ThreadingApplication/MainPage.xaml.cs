@@ -16,6 +16,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
+using WinRTXamlToolkit.Controls.DataVisualization.Charting;
+
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace ThreadingApplication
@@ -27,35 +29,27 @@ namespace ThreadingApplication
     {
         public MainPage()
         {
-            // this.InitializeComponent();
+            this.InitializeComponent();
             displayResult();
         }
         public async Task displayResult()
         {
-            Api api = new Api();
-            await api.setCryptoDayly("BTC", "EUR");
-            Debug.WriteLine("Here");
-            api.getStocks();
-            foreach (Stock s in api.getStocks())
-            {
-                Debug.WriteLine(s.Date + " ");
-                foreach (KeyValuePair<string, string> entry in s.Proprieties)
-                {
-                    Debug.WriteLine(entry.Key + " " + entry.Value);
-                }
-            }
+            AlphaApiFactory apif = new AlphaApiFactory();
+            AlphaManager am = apif.getApiRequest("daily", "BTC", "EUR");
+            await am.setStocks();
+            doChart();
 
-            await api.setCryptoMontly("BTC", "EUR");
-            Debug.WriteLine("Here");
-            api.getStocks();
-            foreach (Stock s in api.getStocks())
-            {
-                Debug.WriteLine(s.Date + " ");
-                foreach (KeyValuePair<string, string> entry in s.Proprieties)
-                {
-                    Debug.WriteLine(entry.Key + " " + entry.Value);
-                }
-            }
+        }
+
+        public void doChart()
+        {
+            List<Chart> Source = new List<Chart>();
+            Source.Add(new Chart() { Name = "N1", Amount = 50 });
+            Source.Add(new Chart() { Name = "N2", Amount = 30 });
+            Source.Add(new Chart() { Name = "N3", Amount = 60 });
+            Source.Add(new Chart() { Name = "N4", Amount = 90 });
+            WinRTXamlToolkit.Controls.DataVisualization.Charting.Chart c = new WinRTXamlToolkit.Controls.DataVisualization.Charting.Chart {  };
+            (ColumnChart.Series[0] as LineSeries).ItemsSource = Source;
         }
     }
 }

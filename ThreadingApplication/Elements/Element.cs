@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ThreadingApplication.Elements;
 
 namespace ThreadingApplication
 {
@@ -10,6 +11,7 @@ namespace ThreadingApplication
     {
         protected String title;
         protected Database bd;
-        protected Api api;
+        protected AlphaApiFactory apiFactory = new AlphaApiFactory();
+        protected AlphaManager api;
     }
 }

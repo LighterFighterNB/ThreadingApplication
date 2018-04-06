@@ -5,7 +5,12 @@
     xmlns:local="using:ThreadingApplication"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Charting="using:WinRTXamlToolkit.Controls.DataVisualization.Charting"
     mc:Ignorable="d">
 
-    <Grid x:Name="Main" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
+    <Grid x:Name="Main" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Charting:Chart x:Name="ColumnChart" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="150 100 0 0" Width="399" Height="400">
+            <Charting:LineSeries Title="Chart" Margin="2,-4,-1.6,4.4" IndependentValuePath="Name" DependentValuePath="Amount" IsSelectionEnabled="True"/>
+        </Charting:Chart>
+    </Grid>
 </Page>
