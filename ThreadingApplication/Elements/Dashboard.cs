@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.System.Threading;
 
 namespace ThreadingApplication
 {
@@ -12,17 +13,33 @@ namespace ThreadingApplication
 
         public Dashboard(String name)
         {
-
+            this.title = name;
+            charts = new List<Chart>();
         }
 
         public void addChart(Chart c)
         {
-
+            charts.Add(c);
         }
 
         public List<Chart> getCharts()
         {
-            return null;
+            return charts;
+        }
+
+        private async void update()
+        {
+            foreach(Chart chart in charts)
+            {
+                Task t = new Task(() =>
+                {
+                    lock (this)
+                    {
+                        chart.setStock();
+                    }
+
+                });
+            }
         }
     }
 }

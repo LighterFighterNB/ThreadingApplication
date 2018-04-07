@@ -11,7 +11,7 @@ namespace ThreadingApplication
     {
         protected String title;
         protected Database bd;
-        protected AlphaApiFactory apiFactory = new AlphaApiFactory();
-        protected AlphaManager api;
+        protected AlphaApiFactory alphaFactory = new AlphaApiFactory();
+        protected AlphaManager alphaManager;
     }
 }

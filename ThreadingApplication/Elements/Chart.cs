@@ -3,16 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ThreadingApplication.Elements;
 
 namespace ThreadingApplication
 {
     class Chart: Element
     {
         private String name;
-        public Chart(string name)
-        {
-
-        }
+        private List<Stock> stocks;
         /// <summary>
         /// Constructor Chart
         /// </summary>
@@ -23,15 +21,27 @@ namespace ThreadingApplication
         public Chart(String name, String from, String to, String function)
         {
             this.name = name;
-
+            alphaManager = alphaFactory.getApiRequest(function, from, to);
+            setStock();
         }
 
-        public Chart()
-        {
-
+        public async 
+        Task
+setStock()
+        { 
+            await alphaManager.setStocks();
+            stocks = new List<Stock>();
+            stocks = alphaManager.getStocks();
         }
 
-        public string Name { get; set; }
-        public int Amount { get; set; }
+        public List<Stock> Stocks {
+            get { return stocks; }
+        }
+        
+        //public String Name
+        //{
+        //    get{ return name; }
+        //    set { name = value; }
+        //}
     }
 }
