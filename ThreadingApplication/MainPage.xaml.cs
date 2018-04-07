@@ -37,19 +37,7 @@ namespace ThreadingApplication
             AlphaApiFactory apif = new AlphaApiFactory();
             AlphaManager am = apif.getApiRequest("daily", "BTC", "EUR");
             await am.setStocks();
-            doChart();
 
-        }
-
-        public void doChart()
-        {
-            List<Chart> Source = new List<Chart>();
-            Source.Add(new Chart() { Name = "N1", Amount = 50 });
-            Source.Add(new Chart() { Name = "N2", Amount = 30 });
-            Source.Add(new Chart() { Name = "N3", Amount = 60 });
-            Source.Add(new Chart() { Name = "N4", Amount = 90 });
-            WinRTXamlToolkit.Controls.DataVisualization.Charting.Chart c = new WinRTXamlToolkit.Controls.DataVisualization.Charting.Chart {  };
-            (ColumnChart.Series[0] as LineSeries).ItemsSource = Source;
         }
     }
 }
