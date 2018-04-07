@@ -8,11 +8,30 @@ namespace ThreadingApplication
 {
     class Preference: Element
     {
-        private List<String> prefs;
+        private Dictionary<string, string> preferences = new Dictionary<string, string>();
 
-        public Preference(String name)
+        public string getPreference(string str)
         {
+            string result = "";
 
+            foreach (KeyValuePair<string, string> entry in preferences)
+            {
+                if (entry.Key.Contains(str))
+                {
+                    result = entry.Value;
+                }
+            }
+            return result;
+        }
+
+        public void changePreference(string str, string value)
+        {
+            preferences.Add(str, value);
+        }
+
+        public void addPreference(string name, string value)
+        {
+            preferences.Add(name, value);
         }
     }
 }

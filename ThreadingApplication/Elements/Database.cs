@@ -63,17 +63,45 @@ namespace ThreadingApplication
             return success;
         }
 
-        public void addPreference(Preference p)
+        public void savePreferences(string email, Preference preferences)
         {
-
+            try
+            {
+                cmd.CommandText = "UPDATE `preference` " +
+                    "SET `email` = '" + email + "'," +
+                    "`displayType` = '" + preferences.getPreference("displayType") + "'," +
+                    "` currency` = '" + preferences.getPreference("currency") + "'" +
+                    " WHERE `email` = '" + email + "'";
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
         }
 
-        private List<Preference> getPreferences()
+        public Preference loadPreferences(string email)
         {
-            return null;
+            Preference preferances = new Preference();
+            try
+            {
+                cmd.CommandText = "SELECT * FROM `preference` WHERE `email` = '" + email + "'";
+                MySqlDataReader mySqlDataReader = cmd.ExecuteReader();
+                mySqlDataReader.Read();
+                for (int i = 0; i < mySqlDataReader.FieldCount; i++)
+                {
+                    preferances.addPreference(mySqlDataReader.GetName(i), mySqlDataReader.GetString(i));
+                }
+                mySqlDataReader.Close();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+            return preferances;
         }
 
-        public void addDashboard(Dashboard d)
+        public void saveDashboard(Dashboard d)
         {
 
         }
