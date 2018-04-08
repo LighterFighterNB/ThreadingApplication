@@ -19,7 +19,7 @@ namespace ThreadingApplication
         {
         }
         
-        private void createMenu(Grid grid)
+        private void createMenu(Grid grid, ViewManager viewer)
         {
             //List<string> imgs = new List<string>();
             //imgs.Add("home.png");
@@ -29,26 +29,73 @@ namespace ThreadingApplication
             Dictionary<string, string> imgs = new Dictionary<string, string>();
             imgs.Add("Dashboard", "home.png");
             imgs.Add("Converter", "coinstack.png");
-            imgs.Add("Profile", "");
-            imgs.Add("", "");
-            for (int i = 0; i < imgs.Count; i++)
+            imgs.Add("Profile", "person3.png");
+            imgs.Add("Settings", "settings.png");
+            int i = 0;
+            foreach(KeyValuePair<String, String> img in imgs)
             {
                 Button button = new Button();
+                button.Name = img.Key;
                 SolidColorBrush scb = new SolidColorBrush();
                 scb.Opacity = 0;
                 button.Content = new Image
                 {
-                    Source = new BitmapImage(new Uri("ms-appx:///Assets/" + imgs[i])),
+                    Source = new BitmapImage(new Uri("ms-appx:///Assets/" + img.Value)),
                     Stretch = Stretch.Fill
                 };
                 button.RequestedTheme = ElementTheme.Default;
                 button.Background = scb;
+                button.Click += delegate (object sender, RoutedEventArgs e)
+                {
+                    switch(img.Key)
+                    {
+                        case "Dashboard":
+                            viewer.setCurrentView(new DashboardView());
+                            current = viewer.getCurrentView().getView(viewer);
+                            viewer.updateMain();
+                            break;
+                        case "Converter":
+                            viewer.setCurrentView(new ConverterView());
+                            current = viewer.getCurrentView().getView(viewer);
+                            viewer.updateMain();
+                            break;
+                        case "Profile":
+                            viewer.setCurrentView(new PortfolioView());
+                            current = viewer.getCurrentView().getView(viewer);
+                            viewer.updateMain();
+                            break;
+                        case "Settings":
+                            viewer.setCurrentView(new SettingsView());
+                            current = viewer.getCurrentView().getView(viewer);
+                            viewer.updateMain();
+                            break;
+                    }
+                };
                 Grid.SetColumn(button, 0);
                 Grid.SetRow(button, i * 3);
                 Grid.SetRowSpan(button, 2);
                 Grid.SetColumnSpan(button, 2);
                 grid.Children.Add(button);
+                i++;
             }
+            //for (int i = 0; i < imgs.Count; i++)
+            //{
+            //    Button button = new Button();
+            //    SolidColorBrush scb = new SolidColorBrush();
+            //    scb.Opacity = 0;
+            //    button.Content = new Image
+            //    {
+            //        Source = new BitmapImage(new Uri("ms-appx:///Assets/" + imgs[i])),
+            //        Stretch = Stretch.Fill
+            //    };
+            //    button.RequestedTheme = ElementTheme.Default;
+            //    button.Background = scb;
+            //    Grid.SetColumn(button, 0);
+            //    Grid.SetRow(button, i * 3);
+            //    Grid.SetRowSpan(button, 2);
+            //    Grid.SetColumnSpan(button, 2);
+            //    grid.Children.Add(button);
+            //}
         }
 
         private void showCharts(Grid grid)
@@ -112,7 +159,7 @@ namespace ThreadingApplication
             grid1.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 184, 197, 219));
             createColumns(grid1, 2);
             createRows(grid1, 25);
-            createMenu(grid1);
+            createMenu(grid1, viewer);
             grid.Children.Add(grid1);
             Grid.SetColumn(grid1, 0);
 

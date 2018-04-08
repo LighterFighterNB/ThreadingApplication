@@ -106,13 +106,5 @@ namespace ThreadingApplication
             current = grid;
             return current;
         }
-
-        private void login_Click(object sender, RoutedEventArgs e)
-        {
-        }
-
-        private void signup_Click(object sender, RoutedEventArgs e)
-        {
-        }
     }
 }
