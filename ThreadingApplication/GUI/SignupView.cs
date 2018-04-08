@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -14,9 +15,7 @@ namespace ThreadingApplication.GUI
     {
         private TextBlock userBlock = new TextBlock();
 
-        public Grid Content { get; private set; }
-
-        public void createSignup()
+        public override Grid getView()
         {
             Grid grid = new Grid();
             grid.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 184, 197, 219));
@@ -99,8 +98,9 @@ namespace ThreadingApplication.GUI
             Grid.SetRow(cancel, 4);
             Grid.SetColumn(cancel, 2);
             grid.Children.Add(cancel);
+            cancel.Click += cancel_Click;
 
-            this.Content = grid;
+            return grid;
         }
 
         private async void signup_Click(object sender, RoutedEventArgs e)
@@ -112,15 +112,15 @@ namespace ThreadingApplication.GUI
             }
         }
 
+        private async void cancel_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private async void createErrorMessage(String message)
         {
             var dialog = new MessageDialog(message);
             await dialog.ShowAsync();
-        }
-
-        public override Grid getView()
-        {
-            throw new NotImplementedException();
         }
     }
 }
