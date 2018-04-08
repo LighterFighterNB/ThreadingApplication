@@ -182,5 +182,85 @@ namespace ThreadingApplication
             }
             return dashboard;
         }
+
+        public void addPortfolio(string email, string name)
+        {
+            try
+            {
+                cmd.CommandText = "INSERT INTO `porfolio`(`email`, `name`) VALUES ('" + email + "','" + name + "')";
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
+
+        public void addCurrency(string portfolio, string name, double owned)
+        {
+            try
+            {
+                cmd.CommandText = "INSERT INTO `currency`(`portfolio`, `name`,`owned`) VALUES ('" + portfolio + "','" + name + "','" + owned + "')";
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
+
+        public void savePortfolio(Portfolio portfolio)
+        {
+            List<string> commands = new List<string>();
+            try
+            {
+                cmd.CommandText = "SELECT `owned`, `name` FROM `currency` WHERE `portfolio` = '" + portfolio.getTitle() + "'";
+                MySqlDataReader mySqlDataReader = cmd.ExecuteReader();
+                while (mySqlDataReader.Read())
+                {
+                    string name = mySqlDataReader.GetString(2);
+                    foreach (Currency currency in portfolio.getCurrencies())
+                    {
+                        if (currency.getName().Equals(name))
+                        {
+                            commands.Add("UPDATE `currency` " +
+                    "SET `owned` = '" + currency.getOwned() +
+                    " WHERE `name` = '" + name + "'");
+                        }
+                    }
+                }
+                mySqlDataReader.Close();
+                foreach (string command in commands)
+                {
+                    cmd.CommandText = command;
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
+
+        public Portfolio loadPortfolio(string name)
+        {
+            Portfolio portfolio = null;
+            try
+            {
+                portfolio = new Portfolio(name);
+                cmd.CommandText = "SELECT `name`, `owned` FROM `currency` WHERE `portfolio` = '" + name + "'";
+                MySqlDataReader mySqlDataReader = cmd.ExecuteReader();
+                while (mySqlDataReader.Read())
+                {
+                    portfolio.addCurrency(new Currency(mySqlDataReader.GetString(0), mySqlDataReader.GetDouble(1)));
+                }
+                mySqlDataReader.Close();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+            return portfolio;
+        }
     }
 }
