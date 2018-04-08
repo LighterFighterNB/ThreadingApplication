@@ -8,12 +8,43 @@ namespace ThreadingApplication
 {
     class Portfolio: Element
     {
-        private String description;
-        private double amount;
+       private string title;
+        private List<Currency> currencies;
 
-        public Portfolio(String name, String description)
+        public Portfolio(String name)
         {
+            this.title = name;
+            currencies = new List<Currency>();
+        }
 
+        public void addCurrency(Currency c)
+        {
+            currencies.Add(c);
+        }
+
+        public List<Currency> getCurrencies()
+        {
+            return currencies;
+        }
+
+        public string getTitle()
+        {
+            return title;
+        }
+
+        private async void update()
+        {
+            foreach (Currency currency in currencies)
+            {
+                Task t = new Task(() =>
+                {
+                    lock (this)
+                    {
+                        //chart.setStock();
+                    }
+
+                });
+            }
         }
     }
 }

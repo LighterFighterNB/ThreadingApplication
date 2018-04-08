@@ -100,6 +100,7 @@
     </Compile>
     <Compile Include="Elements\ApiRequestWeekly.cs" />
     <Compile Include="Elements\Chart.cs" />
+    <Compile Include="Elements\Currency.cs" />
     <Compile Include="Elements\Database.cs" />
     <Compile Include="Elements\Preference.cs" />
     <Compile Include="Elements\Stock.cs" />
@@ -230,7 +231,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MySql.Data.RT">
-      <HintPath>C:\Users\Monica\Desktop\MySql.Data.RT.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\MySQL\MySQL Connector Net 6.7.9\Assemblies\RT\MySql.Data.RT.dll</HintPath>
     </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
