@@ -5,12 +5,12 @@
     xmlns:local="using:ThreadingApplication"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Charting="using:WinRTXamlToolkit.Controls.DataVisualization.Charting"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RequestedTheme="Default">
-        <Button Content="LogIn" HorizontalAlignment="Left" Margin="320,550,0,0" VerticalAlignment="Top"/>
-        <Button Content="Register" HorizontalAlignment="Left" Margin="400,550,0,0" VerticalAlignment="Top" RequestedTheme="Default"/>
-        <TextBox HorizontalAlignment="Left" Margin="320,450,0,0" Text="LogIn ID" VerticalAlignment="Top" Width="300"/>
-        <TextBox HorizontalAlignment="Left" Margin="320,500,0,0" Text="Password" VerticalAlignment="Top" Width="300" RequestedTheme="Default"/>
+    <Grid x:Name="Main" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Charting:Chart x:Name="ColumnChart" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="150 100 0 0" Width="399" Height="400">
+            <Charting:LineSeries Title="Chart" Margin="2,-4,-1.6,4.4" IndependentValuePath="Name" DependentValuePath="Amount" IsSelectionEnabled="True"/>
+        </Charting:Chart>
     </Grid>
 </Page>

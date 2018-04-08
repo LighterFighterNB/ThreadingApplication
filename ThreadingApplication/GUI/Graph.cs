@@ -8,5 +8,9 @@ namespace ThreadingApplication
 {
     class Graph
     {
+        public Graph()
+        {
+
+        }
     }
 }

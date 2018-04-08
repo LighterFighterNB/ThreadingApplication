@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace ThreadingApplication
 {
-    class Notification
+    class Notification: Element
     {
+        private String description;
+
+        public Notification(String title, String description)
+        {
+
+        }
     }
 }
