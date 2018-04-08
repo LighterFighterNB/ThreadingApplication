@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ThreadingApplication.GUI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -11,8 +12,14 @@ namespace ThreadingApplication
 {
     class LoginView : StateView
     {
-        public override Grid getView()
+        public LoginView()
         {
+        }
+        public override Grid getView(ViewManager viewer)
+        {
+            viewer.setCurrentView(new LoginView());
+            viewer.setNextView(new DashboardView());
+            viewer.setPreviousView(new SignupView());
             Grid grid = new Grid();
             grid.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 184, 197, 219));
             createColumns(grid, 4);
@@ -52,10 +59,12 @@ namespace ThreadingApplication
             Grid.SetColumn(passBlock, 1);
             grid.Children.Add(passBlock);
 
-            PasswordBox password = new PasswordBox();
-            password.Margin = new Thickness(5);
-            password.HorizontalAlignment = HorizontalAlignment.Stretch;
-            password.VerticalAlignment = VerticalAlignment.Top;
+            PasswordBox password = new PasswordBox
+            {
+                Margin = new Thickness(5),
+                HorizontalAlignment = HorizontalAlignment.Stretch,
+                VerticalAlignment = VerticalAlignment.Top
+            };
             Grid.SetRow(password, 2);
             Grid.SetColumn(password, 2);
             grid.Children.Add(password);
@@ -68,7 +77,16 @@ namespace ThreadingApplication
             Grid.SetRow(login, 3);
             Grid.SetColumn(login, 1);
             grid.Children.Add(login);
-            login.Click += login_Click;
+            login.Click += delegate (object sender, RoutedEventArgs e) {
+
+                bool isCorrect = true;
+                if (isCorrect)
+                {
+                    viewer.setCurrentView(viewer.getNextView());
+                    current = viewer.getCurrentView().getView(viewer);
+                    viewer.updateMain();
+                }
+            };
 
             Button signup = new Button();
             signup.Content = "Sign Up";
@@ -78,19 +96,23 @@ namespace ThreadingApplication
             Grid.SetRow(signup, 3);
             Grid.SetColumn(signup, 2);
             grid.Children.Add(signup);
-            signup.Click += signup_Click;
+            signup.Click += delegate (object sender, RoutedEventArgs e) {
 
-            return grid;
+                viewer.setCurrentView(viewer.getPerviousView());
+                current = viewer.getCurrentView().getView(viewer);
+                viewer.updateMain();
+            };
+            manager = viewer;
+            current = grid;
+            return current;
         }
 
-        private async void login_Click(object sender, RoutedEventArgs e)
+        private void login_Click(object sender, RoutedEventArgs e)
         {
-
         }
 
-        private async void signup_Click(object sender, RoutedEventArgs e)
+        private void signup_Click(object sender, RoutedEventArgs e)
         {
-
         }
     }
 }

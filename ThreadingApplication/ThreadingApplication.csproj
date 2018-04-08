@@ -108,9 +108,9 @@
     <Compile Include="GUI\DashboardView.cs" />
     <Compile Include="Elements\Element.cs" />
     <Compile Include="GUI\Graph.cs" />
-    <Compile Include="GUI\GUI.cs" />
     <Compile Include="GUI\LoginView.cs" />
     <Compile Include="GUI\SignupView.cs" />
+    <Compile Include="GUI\ViewManager.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -129,6 +129,75 @@
     <None Include="ThreadingApplication_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\add.png" />
+    <Content Include="Assets\addfriend.png" />
+    <Content Include="Assets\arrow1.png" />
+    <Content Include="Assets\arrow2.png" />
+    <Content Include="Assets\arrow3.png" />
+    <Content Include="Assets\arrow4.png" />
+    <Content Include="Assets\bars.png" />
+    <Content Include="Assets\bars2.png" />
+    <Content Include="Assets\bear.png" />
+    <Content Include="Assets\book.png" />
+    <Content Include="Assets\cam2.png" />
+    <Content Include="Assets\camera.png" />
+    <Content Include="Assets\cart.png" />
+    <Content Include="Assets\cat.png" />
+    <Content Include="Assets\chatBubble.png" />
+    <Content Include="Assets\chatBubble1.png" />
+    <Content Include="Assets\clock.png" />
+    <Content Include="Assets\coin.png" />
+    <Content Include="Assets\coinsak.png" />
+    <Content Include="Assets\coinstack.png" />
+    <Content Include="Assets\cup.png" />
+    <Content Include="Assets\diamond.png" />
+    <Content Include="Assets\dog.png" />
+    <Content Include="Assets\exclamationpoint.png" />
+    <Content Include="Assets\facebook.png" />
+    <Content Include="Assets\flower.png" />
+    <Content Include="Assets\folder.png" />
+    <Content Include="Assets\gift2.png" />
+    <Content Include="Assets\gift2Open.png" />
+    <Content Include="Assets\googleplus.png" />
+    <Content Include="Assets\heart.png" />
+    <Content Include="Assets\home.png" />
+    <Content Include="Assets\key.png" />
+    <Content Include="Assets\likeunlike.png" />
+    <Content Include="Assets\lock.png" />
+    <Content Include="Assets\magnifyingglass.png" />
+    <Content Include="Assets\mic.png" />
+    <Content Include="Assets\mic2.png" />
+    <Content Include="Assets\minus.png" />
+    <Content Include="Assets\Monday.jpg" />
+    <Content Include="Assets\moreoption.png" />
+    <Content Include="Assets\moreoption2.png" />
+    <Content Include="Assets\msg.png" />
+    <Content Include="Assets\music.png" />
+    <Content Include="Assets\next.png" />
+    <Content Include="Assets\nosound.png" />
+    <Content Include="Assets\noSound2.png" />
+    <Content Include="Assets\pause.png" />
+    <Content Include="Assets\percent.png" />
+    <Content Include="Assets\person1.png" />
+    <Content Include="Assets\person2.png" />
+    <Content Include="Assets\person3.png" />
+    <Content Include="Assets\play.png" />
+    <Content Include="Assets\questionmark.png" />
+    <Content Include="Assets\ribbon.png" />
+    <Content Include="Assets\settings.png" />
+    <Content Include="Assets\share.png" />
+    <Content Include="Assets\shiled.png" />
+    <Content Include="Assets\skull.png" />
+    <Content Include="Assets\soundon.png" />
+    <Content Include="Assets\speaker.png" />
+    <Content Include="Assets\speaker2.png" />
+    <Content Include="Assets\star.png" />
+    <Content Include="Assets\stop.png" />
+    <Content Include="Assets\store.png" />
+    <Content Include="Assets\sword.png" />
+    <Content Include="Assets\Timer2.png" />
+    <Content Include="Assets\unlock.png" />
+    <Content Include="Assets\x.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -161,7 +230,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MySql.Data.RT">
-      <HintPath>C:\Program Files (x86)\MySQL\MySQL Connector Net 6.7.9\Assemblies\RT\MySql.Data.RT.dll</HintPath>
+      <HintPath>C:\Users\Monica\Desktop\MySql.Data.RT.dll</HintPath>
     </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

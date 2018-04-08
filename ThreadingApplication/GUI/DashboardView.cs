@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ThreadingApplication.Elements;
+using ThreadingApplication.GUI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -14,13 +15,22 @@ namespace ThreadingApplication
 {
     class DashboardView : StateView
     {
+        public DashboardView()
+        {
+        }
+        
         private void createMenu(Grid grid)
         {
-            List<string> imgs = new List<string>();
-            imgs.Add("home.png");
-            imgs.Add("coinstack.png");
-            imgs.Add("person3.png");
-            imgs.Add("settings.png");
+            //List<string> imgs = new List<string>();
+            //imgs.Add("home.png");
+            //imgs.Add("coinstack.png");
+            //imgs.Add("person3.png");
+            //imgs.Add("settings.png");
+            Dictionary<string, string> imgs = new Dictionary<string, string>();
+            imgs.Add("Dashboard", "home.png");
+            imgs.Add("Converter", "coinstack.png");
+            imgs.Add("Profile", "");
+            imgs.Add("", "");
             for (int i = 0; i < imgs.Count; i++)
             {
                 Button button = new Button();
@@ -28,7 +38,7 @@ namespace ThreadingApplication
                 scb.Opacity = 0;
                 button.Content = new Image
                 {
-                    Source = new BitmapImage(new Uri("Assets/" + imgs[i])),
+                    Source = new BitmapImage(new Uri("ms-appx:///Assets/" + imgs[i])),
                     Stretch = Stretch.Fill
                 };
                 button.RequestedTheme = ElementTheme.Default;
@@ -86,8 +96,9 @@ namespace ThreadingApplication
             grid.Children.Add(chart);
         }
 
-        public override Grid getView()
+        public override Grid getView(ViewManager viewer)
         {
+
             Grid grid = new Grid();
             ColumnDefinition col = new ColumnDefinition();
             col.Width = new GridLength(1, GridUnitType.Star);
@@ -111,8 +122,8 @@ namespace ThreadingApplication
             showCharts(grid2);
             grid.Children.Add(grid2);
             Grid.SetColumn(grid2, 1);
-
-            return grid;
+            current = grid;
+            return current;
         }
     }
 }

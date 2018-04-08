@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ThreadingApplication.Elements;
+using ThreadingApplication.GUI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -10,9 +12,11 @@ namespace ThreadingApplication
 {
     abstract class StateView
     {
-        private Api api;
+        private AlphaManager api;
         private Database db;
-        public abstract Grid getView();
+        protected ViewManager manager;
+        public abstract Grid getView(ViewManager viewer);
+        protected Grid current;
 
         protected void createColumns(Grid grid, int columnsNumber)
         {
