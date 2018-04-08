@@ -110,6 +110,7 @@
     <Compile Include="GUI\Graph.cs" />
     <Compile Include="GUI\GUI.cs" />
     <Compile Include="GUI\LoginView.cs" />
+    <Compile Include="GUI\SignupView.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
