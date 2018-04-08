@@ -63,6 +63,7 @@ namespace ThreadingApplication
                 button.Background = scb;
                 button.Click += delegate (object sender, RoutedEventArgs e)
                 {
+                    grid.Children.Clear();
                     switch (img.Key)
                     {
                         case "Dashboard":

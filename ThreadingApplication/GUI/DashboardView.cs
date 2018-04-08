@@ -68,6 +68,7 @@ namespace ThreadingApplication
         {
 
             Grid grid = new Grid();
+            grid.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 184, 197, 219));
             ColumnDefinition col = new ColumnDefinition();
             col.Width = new GridLength(1, GridUnitType.Star);
             grid.ColumnDefinitions.Add(col);
@@ -77,7 +78,7 @@ namespace ThreadingApplication
             grid.ColumnDefinitions.Add(col1);
 
             Grid grid1 = new Grid();
-            grid1.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 184, 197, 219));
+            grid1.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 150, 180, 250));
             createColumns(grid1, 2);
             createRows(grid1, 25);
             createMenu(grid1, viewer);

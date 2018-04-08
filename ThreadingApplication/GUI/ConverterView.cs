@@ -20,9 +20,8 @@ namespace ThreadingApplication.GUI
 
         public override Grid getView(ViewManager viewer)
         {
-
-
             Grid grid = new Grid();
+            grid.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 184, 197, 219));
             ColumnDefinition col = new ColumnDefinition();
             col.Width = new GridLength(1, GridUnitType.Star);
             grid.ColumnDefinitions.Add(col);
@@ -32,17 +31,17 @@ namespace ThreadingApplication.GUI
             grid.ColumnDefinitions.Add(col1);
 
 
-            Grid grid1 = new Grid();
-            grid1.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 184, 197, 219));
-            createColumns(grid1, 2);
-            createRows(grid1, 25);
-            createMenu(grid1, viewer);
-            grid.Children.Add(grid1);
-            Grid.SetColumn(grid1, 0);
+            Grid converterGrid = new Grid();
+            converterGrid.Name = "ConverterGrid";
+            converterGrid.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 150, 180, 250));
+            createColumns(converterGrid, 2);
+            createRows(converterGrid, 25);
+            createMenu(converterGrid, viewer);
+            Grid.SetColumn(converterGrid, 0);
 
-            Grid grid2 = new Grid();
-            createColumns(grid2, 20);
-            createRows(grid2, 20);
+            Grid converterView = new Grid();
+            createColumns(converterView, 20);
+            createRows(converterView, 20);
 
             TextBlock content = new TextBlock();
             content.Text = "Convertor";
@@ -51,13 +50,13 @@ namespace ThreadingApplication.GUI
             Grid.SetRow(content, 3);
             Grid.SetRowSpan(content, 2);
             Grid.SetColumnSpan(content, 7);
-            grid2.Children.Add(content);
+            converterView.Children.Add(content);
             TextBox numberz = new TextBox();
             Grid.SetColumn(numberz, 5);
             Grid.SetRow(numberz, 6);
             numberz.VerticalAlignment = VerticalAlignment.Top;
             Grid.SetColumnSpan(numberz, 5);
-            grid2.Children.Add(numberz);
+            converterView.Children.Add(numberz);
 
             ComboBox currency1 = new ComboBox();
             currency1.Items.Add("EUR");
@@ -73,7 +72,7 @@ namespace ThreadingApplication.GUI
             Grid.SetRow(currency1, 6);
             Grid.SetRowSpan(currency1, 5);
             Grid.SetColumnSpan(currency1, 5);
-            grid2.Children.Add(currency1);
+            converterView.Children.Add(currency1);
 
             TextBlock convertedNumbers = new TextBlock();
             convertedNumbers.Text = "0";
@@ -82,7 +81,7 @@ namespace ThreadingApplication.GUI
             Grid.SetRow(convertedNumbers, 8);
             Grid.SetRowSpan(convertedNumbers, 5);
             Grid.SetColumnSpan(convertedNumbers, 5);
-            grid2.Children.Add(convertedNumbers);
+            converterView.Children.Add(convertedNumbers);
 
             ComboBox currency2 = new ComboBox();
             currency2.Items.Add("EUR");
@@ -97,18 +96,28 @@ namespace ThreadingApplication.GUI
             Grid.SetRow(currency2, 8);
             Grid.SetRowSpan(currency2, 5);
             Grid.SetColumnSpan(currency2, 5);
-            grid2.Children.Add(currency2);
+            converterView.Children.Add(currency2);
 
             Button converterButton = new Button();
             Grid.SetColumn(converterButton, 8);
             Grid.SetRow(converterButton, 10);
             Grid.SetRowSpan(converterButton, 5);
             Grid.SetColumnSpan(converterButton, 5);
-            grid2.Children.Add(converterButton);
+            converterView.Children.Add(converterButton);
             converterButton.Content = "Convert";
             converterButton.VerticalAlignment = VerticalAlignment.Center;
-            converterButton.Click += converter_Click;
-            current = grid2;
+            converterButton.Click += delegate (object sender, RoutedEventArgs e)
+            {
+                if (!(!string.IsNullOrWhiteSpace(numberz.Text) && Regex.IsMatch(numberz.Text, @"^[0-9]+.?[0-9]*$")))
+                {
+                    createErrorMessage("You can only convert numbers");
+                    numberz.Text = "";
+                }
+            };
+            grid.Children.Add(converterGrid);
+            Grid.SetColumn(converterView, 1);
+            grid.Children.Add(converterView);
+            current = grid;
             return current;
         }
 
