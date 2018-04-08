@@ -9,6 +9,7 @@ namespace ThreadingApplication
 {
     class Dashboard: Element
     {
+        private string title;
         private List<Chart> charts;
 
         public Dashboard(String name)
@@ -40,6 +41,11 @@ namespace ThreadingApplication
 
                 });
             }
+        }
+
+        public string getTitle()
+        {
+            return title;
         }
     }
 }

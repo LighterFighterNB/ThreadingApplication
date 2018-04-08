@@ -101,19 +101,86 @@ namespace ThreadingApplication
             return preferances;
         }
 
-        public void saveDashboard(Dashboard d)
+        public void addDashboard(string email, string name)
         {
-
+            try
+            {
+                cmd.CommandText = "INSERT INTO `dashboard`(`email`, `dashboardName`) VALUES ('" + email + "','" + name + "')";
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
         }
 
-        public List<Dashboard> getDashboard()
+        public void addChart(string dashboard, string name, string fromCur, string toMarket, string refreshRate)
         {
-            return null;
+            try
+            {
+                cmd.CommandText = "INSERT INTO `chart`(`dashboardName`, `name`,`fromCur`,`toMark`,`refreshRate`) VALUES ('" + dashboard + "','" + name + "','" + fromCur + "','" + toMarket + "','" + refreshRate + "')";
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
         }
 
-        public void addChartToDashboard(Chart c, Dashboard d)
+        public void saveDashboard(Dashboard dashboard)
         {
+            List<string> commands = new List<string>();
+            try
+            {
+                cmd.CommandText = "SELECT `fromCur`,`toMark`,`refreshRate`, `name` FROM `chart` WHERE `dashboard` = '" + dashboard.getTitle() + "'";
+                MySqlDataReader mySqlDataReader = cmd.ExecuteReader();
+                while (mySqlDataReader.Read())
+                {
+                    string name = mySqlDataReader.GetString(3);
+                    foreach (Chart chart in dashboard.getCharts())
+                    {
+                        if (chart.getName().Equals(name))
+                        {
+                            commands.Add("UPDATE `chart` " +
+                    "SET `fromCur` = '" + chart.getFrom() + "'," +
+                    "`toMark` = '" + chart.getTo() + "'," +
+                    "`refreshRate` = '" + chart.getFunction() + "'" +
+                    " WHERE `name` = '" + name + "'");
+                        }
+                    }
+                }
+                mySqlDataReader.Close();
+                foreach (string command in commands)
+                {
+                    cmd.CommandText = command;
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
 
+        public Dashboard loadDashboard(string name, string email)
+        {
+            Dashboard dashboard = null;
+            try
+            {
+                dashboard = new Dashboard(name);
+                cmd.CommandText = "SELECT `name`, `fromCur`, `toMark`, `refreshRate` FROM `chart` WHERE `dashboard` = '" + name + "'";
+                MySqlDataReader mySqlDataReader = cmd.ExecuteReader();
+                while (mySqlDataReader.Read())
+                {
+                    dashboard.addChart(new Chart(mySqlDataReader.GetString(0), mySqlDataReader.GetString(1), mySqlDataReader.GetString(2), mySqlDataReader.GetString(3)));
+                }
+                mySqlDataReader.Close();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+            return dashboard;
         }
     }
 }

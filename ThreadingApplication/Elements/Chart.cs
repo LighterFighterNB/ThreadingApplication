@@ -9,7 +9,10 @@ namespace ThreadingApplication
 {
     class Chart: Element
     {
-        private String name;
+        private string name;
+        private string from;
+        private string to;
+        private string function;
         private List<Stock> stocks;
         /// <summary>
         /// Constructor Chart
@@ -21,6 +24,9 @@ namespace ThreadingApplication
         public Chart(String name, String from, String to, String function)
         {
             this.name = name;
+            this.from = from;
+            this.to = to;
+            this.function = function;
             alphaManager = alphaFactory.getApiRequest(function, from, to);
             setStock();
         }
@@ -40,6 +46,23 @@ setStock()
 
         public List<Stock> Stocks {
             get { return stocks; }
+        }
+        
+        public string getName()
+        {
+            return name;
+        }
+        public string getFrom()
+        {
+            return from;
+        }
+        public string getTo()
+        {
+            return to;
+        }
+        public string getFunction()
+        {
+            return function;
         }
         public String Date { get; set; }
         public double Amount { get; set; }
