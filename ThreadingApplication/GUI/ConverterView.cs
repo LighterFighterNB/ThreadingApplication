@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 namespace ThreadingApplication.GUI
 {
@@ -19,11 +20,29 @@ namespace ThreadingApplication.GUI
 
         public override Grid getView(ViewManager viewer)
         {
+
+
             Grid grid = new Grid();
+            ColumnDefinition col = new ColumnDefinition();
+            col.Width = new GridLength(1, GridUnitType.Star);
+            grid.ColumnDefinitions.Add(col);
+
+            ColumnDefinition col1 = new ColumnDefinition();
+            col1.Width = new GridLength(20, GridUnitType.Star);
+            grid.ColumnDefinitions.Add(col1);
 
 
-            createColumns(grid, 20);
-            createRows(grid, 20);
+            Grid grid1 = new Grid();
+            grid1.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 184, 197, 219));
+            createColumns(grid1, 2);
+            createRows(grid1, 25);
+            createMenu(grid1, viewer);
+            grid.Children.Add(grid1);
+            Grid.SetColumn(grid1, 0);
+
+            Grid grid2 = new Grid();
+            createColumns(grid2, 20);
+            createRows(grid2, 20);
 
             TextBlock content = new TextBlock();
             content.Text = "Convertor";
@@ -32,13 +51,13 @@ namespace ThreadingApplication.GUI
             Grid.SetRow(content, 3);
             Grid.SetRowSpan(content, 2);
             Grid.SetColumnSpan(content, 7);
-            grid.Children.Add(content);
+            grid2.Children.Add(content);
             TextBox numberz = new TextBox();
             Grid.SetColumn(numberz, 5);
             Grid.SetRow(numberz, 6);
             numberz.VerticalAlignment = VerticalAlignment.Top;
             Grid.SetColumnSpan(numberz, 5);
-            grid.Children.Add(numberz);
+            grid2.Children.Add(numberz);
 
             ComboBox currency1 = new ComboBox();
             currency1.Items.Add("EUR");
@@ -48,11 +67,13 @@ namespace ThreadingApplication.GUI
             currency1.Items.Add("SGD");
             currency1.Items.Add("ZAR");
             currency1.Items.Add("CNY");
+            currency1.SelectedIndex = 0;
+
             Grid.SetColumn(currency1, 12);
             Grid.SetRow(currency1, 6);
             Grid.SetRowSpan(currency1, 5);
             Grid.SetColumnSpan(currency1, 5);
-            grid.Children.Add(currency1);
+            grid2.Children.Add(currency1);
 
             TextBlock convertedNumbers = new TextBlock();
             convertedNumbers.Text = "0";
@@ -61,7 +82,7 @@ namespace ThreadingApplication.GUI
             Grid.SetRow(convertedNumbers, 8);
             Grid.SetRowSpan(convertedNumbers, 5);
             Grid.SetColumnSpan(convertedNumbers, 5);
-            grid.Children.Add(convertedNumbers);
+            grid2.Children.Add(convertedNumbers);
 
             ComboBox currency2 = new ComboBox();
             currency2.Items.Add("EUR");
@@ -71,22 +92,23 @@ namespace ThreadingApplication.GUI
             currency2.Items.Add("SGD");
             currency2.Items.Add("ZAR");
             currency2.Items.Add("CNY");
+            currency2.SelectedIndex = 0;
             Grid.SetColumn(currency2, 12);
             Grid.SetRow(currency2, 8);
             Grid.SetRowSpan(currency2, 5);
             Grid.SetColumnSpan(currency2, 5);
-            grid.Children.Add(currency2);
+            grid2.Children.Add(currency2);
 
             Button converterButton = new Button();
             Grid.SetColumn(converterButton, 8);
             Grid.SetRow(converterButton, 10);
             Grid.SetRowSpan(converterButton, 5);
             Grid.SetColumnSpan(converterButton, 5);
-            grid.Children.Add(converterButton);
+            grid2.Children.Add(converterButton);
             converterButton.Content = "Convert";
             converterButton.VerticalAlignment = VerticalAlignment.Center;
             converterButton.Click += converter_Click;
-            current = grid;
+            current = grid2;
             return current;
         }
 
