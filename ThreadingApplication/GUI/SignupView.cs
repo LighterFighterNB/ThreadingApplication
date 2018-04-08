@@ -13,10 +13,17 @@ namespace ThreadingApplication.GUI
 {
     class SignupView : StateView
     {
-        private TextBlock userBlock = new TextBlock();
+        private TextBlock userBlock;
 
-        public override Grid getView()
+        public SignupView()
         {
+        }
+
+        public override Grid getView(ViewManager viewer)
+        {
+            viewer.setCurrentView(this);
+            viewer.setNextView(new LoginView());
+            viewer.setPreviousView(new LoginView());
             Grid grid = new Grid();
             grid.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 184, 197, 219));
             createColumns(grid, 4);
@@ -30,7 +37,7 @@ namespace ThreadingApplication.GUI
             Grid.SetRow(title, 0);
             Grid.SetColumn(title, 1);
             grid.Children.Add(title);
-
+            userBlock = new TextBlock();
             userBlock.Margin = new Thickness(5);
             userBlock.Text = "User e-mail: ";
             userBlock.HorizontalAlignment = HorizontalAlignment.Center;
@@ -88,7 +95,13 @@ namespace ThreadingApplication.GUI
             Grid.SetRow(signup, 4);
             Grid.SetColumn(signup, 1);
             grid.Children.Add(signup);
-            signup.Click += signup_Click;
+            signup.Click += delegate (object sender, RoutedEventArgs e) {
+                String email = userBlock.Text;
+                if (string.IsNullOrWhiteSpace(email) || !Regex.IsMatch(email, @"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"))
+                {
+                    createErrorMessage("The email is invalid");
+                }
+            }; 
 
             Button cancel = new Button();
             cancel.Content = "Cancel";
@@ -98,23 +111,13 @@ namespace ThreadingApplication.GUI
             Grid.SetRow(cancel, 4);
             Grid.SetColumn(cancel, 2);
             grid.Children.Add(cancel);
-            cancel.Click += cancel_Click;
-
-            return grid;
-        }
-
-        private async void signup_Click(object sender, RoutedEventArgs e)
-        {
-            String email = userBlock.Text;
-            if (string.IsNullOrWhiteSpace(email) || !Regex.IsMatch(email, @"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"))
-            {
-                createErrorMessage("The email is invalid");
-            }
-        }
-
-        private async void cancel_Click(object sender, RoutedEventArgs e)
-        {
-
+            cancel.Click += delegate (object sender, RoutedEventArgs e) {
+                viewer.setCurrentView(viewer.getNextView());
+                current = viewer.getCurrentView().getView(viewer);
+                viewer.updateMain();
+            }; 
+            current = grid;
+            return current;
         }
 
         private async void createErrorMessage(String message)
@@ -122,5 +125,6 @@ namespace ThreadingApplication.GUI
             var dialog = new MessageDialog(message);
             await dialog.ShowAsync();
         }
+        
     }
 }
