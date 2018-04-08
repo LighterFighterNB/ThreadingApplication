@@ -24,6 +24,10 @@ namespace ThreadingApplication
             alphaManager = alphaFactory.getApiRequest(function, from, to);
             setStock();
         }
+        public Chart()
+        {
+
+        }
 
         public async 
         Task
@@ -37,7 +41,9 @@ setStock()
         public List<Stock> Stocks {
             get { return stocks; }
         }
-        
+        public String Date { get; set; }
+        public double Amount { get; set; }
+
         //public String Name
         //{
         //    get{ return name; }
