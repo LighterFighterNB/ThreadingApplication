@@ -10,7 +10,7 @@ namespace ThreadingApplication
     abstract class Element
     {
         protected String title;
-        protected Database bd;
+        protected Database db;
         protected AlphaApiFactory alphaFactory = new AlphaApiFactory();
         protected AlphaManager alphaManager;
     }

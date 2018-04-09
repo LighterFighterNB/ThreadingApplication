@@ -222,7 +222,7 @@ namespace ThreadingApplication
         {
             try
             {
-                cmd.CommandText = "INSERT INTO `currency`(`portfolio`, `name`,`owned`) VALUES ('" + portfolio + "','" + name + "','" + owned + "')";
+                cmd.CommandText = "INSERT INTO `currency`(`portfolio`, `type`,`owned`) VALUES ('" + portfolio + "','" + name + "','" + owned + "')";
                 cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
@@ -270,7 +270,7 @@ namespace ThreadingApplication
             try
             {
                 portfolio = new Portfolio(name);
-                cmd.CommandText = "SELECT `name`, `owned` FROM `currency` WHERE `portfolio` = '" + name + "'";
+                cmd.CommandText = "SELECT `type`, `owned` FROM `currency` WHERE `portfolio` = '" + name + "'";
                 MySqlDataReader mySqlDataReader = cmd.ExecuteReader();
                 while (mySqlDataReader.Read())
                 {

@@ -15,10 +15,17 @@ namespace ThreadingApplication
         {
             this.title = name;
             currencies = new List<Currency>();
+            this.db = db;
         }
 
         public void addCurrency(Currency c)
         {
+            currencies.Add(c);
+        }
+
+        public void addCurrency(Currency c, Database db)
+        {
+            db.addCurrency(this.title, c.getName(), c.getOwned());
             currencies.Add(c);
         }
 

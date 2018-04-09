@@ -91,9 +91,16 @@ namespace ThreadingApplication.GUI
             add.Click += delegate (object sender, RoutedEventArgs e)
             {
 
-                if (string.IsNullOrWhiteSpace(owned.Text) || !Regex.IsMatch(owned.Text, @"^[0-9]+.?[0-9]*$") || string.IsNullOrWhiteSpace(currency.Text))
+                if (string.IsNullOrWhiteSpace(owned.Text) || !Regex.IsMatch(owned.Text, @"^[0-9]+.?[0-9]*$") || string.IsNullOrWhiteSpace(currency.SelectedItem.ToString()))
                 {
                     createErrorMessage("The stock is not valid");
+                }
+                else
+                {
+                    db.addCurrency("MyPortfolio", currency.SelectedItem.ToString(), Convert.ToDouble(owned.Text.ToString()));
+                    viewer.setCurrentView(new PortfolioView());
+                    current = viewer.getCurrentView().getView(viewer, objPool);
+                    viewer.updateMain();
                 }
             }; 
 
