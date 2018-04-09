@@ -154,9 +154,9 @@ namespace ThreadingApplication
             plus.VerticalAlignment = VerticalAlignment.Center;
             plus.Click += delegate (object sender, RoutedEventArgs e)
             {
-                //viewer.setCurrentView(new AddNewItemView());
-                //current = viewer.getCurrentView().getView(viewer, objPool);
-                //viewer.updateMain();
+                viewer.setCurrentView(new DashboardItemView());
+                current = viewer.getCurrentView().getView(viewer, objPool);
+                viewer.updateMain();
             };
             Grid.SetRow(plus, 2);
             Grid.SetColumn(plus, 3);
