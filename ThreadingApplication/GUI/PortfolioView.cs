@@ -8,6 +8,7 @@ using ThreadingApplication.GUI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace ThreadingApplication
 {
@@ -153,71 +154,111 @@ namespace ThreadingApplication
 
         public override Grid getView(ViewManager viewer, ObjectPool objPool)
         {
-            Grid grid = new Grid();
-            grid.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 184, 197, 219));
-            createColumns(grid, 6);
-            createRows(grid, 15);
+            Grid grid2;
+            Grid grid1 = new Grid();
+            grid1.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 150, 180, 250));
+            createColumns(grid1, 2);
+            createRows(grid1, 25);
+            createMenu(grid1, viewer, objPool);
+            Grid.SetColumn(grid1, 0);
+            if (objPool.getState("Portfolio") == null)
+            {
+                grid2 = new Grid();
+                grid2.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 184, 197, 219));
+                ColumnDefinition col = new ColumnDefinition();
+                col.Width = new GridLength(1, GridUnitType.Star);
+                grid2.ColumnDefinitions.Add(col);
 
-            TextBlock title = new TextBlock();
-            title.Text = "Profile";
-            title.FontSize = 25;
-            title.HorizontalAlignment = HorizontalAlignment.Right;
-            title.VerticalAlignment = VerticalAlignment.Center;
-            Grid.SetRow(title, 0);
-            Grid.SetColumn(title, 1);
-            grid.Children.Add(title);
+                ColumnDefinition col1 = new ColumnDefinition();
+                col1.Width = new GridLength(20, GridUnitType.Star);
+                grid2.ColumnDefinitions.Add(col1);
 
-            TextBlock name = new TextBlock();
-            name.Text = "Name: ";
-            name.FontSize = 15;
-            name.HorizontalAlignment = HorizontalAlignment.Right;
-            name.VerticalAlignment = VerticalAlignment.Bottom;
-            Grid.SetRow(name, 1);
-            Grid.SetColumn(name, 1);
-            grid.Children.Add(name);
+                Grid grid = new Grid();
+                grid.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 184, 197, 219));
+                createColumns(grid, 6);
+                createRows(grid, 15);
 
-            TextBlock userName = new TextBlock();
-            userName.Text = "name";
-            userName.HorizontalAlignment = HorizontalAlignment.Left;
-            userName.VerticalAlignment = VerticalAlignment.Bottom;
-            Grid.SetRow(userName, 1);
-            Grid.SetColumn(userName, 2);
-            grid.Children.Add(userName);
+                TextBlock title = new TextBlock();
+                title.Text = "Profile";
+                title.FontSize = 25;
+                title.HorizontalAlignment = HorizontalAlignment.Right;
+                title.VerticalAlignment = VerticalAlignment.Center;
+                Grid.SetRow(title, 0);
+                Grid.SetColumn(title, 1);
+                grid.Children.Add(title);
 
-            TextBlock sum = new TextBlock();
-            sum.Text = "Total amount: ";
-            sum.FontSize = 15;
-            sum.HorizontalAlignment = HorizontalAlignment.Right;
-            sum.VerticalAlignment = VerticalAlignment.Bottom;
-            Grid.SetRow(sum, 1);
-            Grid.SetColumn(sum, 3);
-            grid.Children.Add(sum);
+                TextBlock name = new TextBlock();
+                name.Text = "Name: ";
+                name.FontSize = 15;
+                name.HorizontalAlignment = HorizontalAlignment.Right;
+                name.VerticalAlignment = VerticalAlignment.Bottom;
+                Grid.SetRow(name, 1);
+                Grid.SetColumn(name, 1);
+                grid.Children.Add(name);
 
-            TextBlock totalAmount = new TextBlock();
-            totalAmount.Text = "amount";
-            totalAmount.HorizontalAlignment = HorizontalAlignment.Left;
-            totalAmount.VerticalAlignment = VerticalAlignment.Bottom;
-            Grid.SetRow(totalAmount, 1);
-            Grid.SetColumn(totalAmount, 4);
-            grid.Children.Add(totalAmount);
+                TextBlock userName = new TextBlock();
+                userName.Text = "name";
+                userName.HorizontalAlignment = HorizontalAlignment.Left;
+                userName.VerticalAlignment = VerticalAlignment.Bottom;
+                Grid.SetRow(userName, 1);
+                Grid.SetColumn(userName, 2);
+                grid.Children.Add(userName);
 
-            Button plus = new Button();
-            plus.Content = "+";
-            Grid.SetColumn(plus, 4);
-            Grid.SetRow(plus, 15);
-            grid.Children.Add(plus);
+                TextBlock sum = new TextBlock();
+                sum.Text = "Total amount: ";
+                sum.FontSize = 15;
+                sum.HorizontalAlignment = HorizontalAlignment.Right;
+                sum.VerticalAlignment = VerticalAlignment.Bottom;
+                Grid.SetRow(sum, 1);
+                Grid.SetColumn(sum, 3);
+                grid.Children.Add(sum);
 
-            Grid context = new Grid();
-            createColumns(context, 3);
-            createRows(context, 10);
-            createContext(context);
-            Grid.SetRow(context, 3);
-            Grid.SetRowSpan(context, 10);
-            Grid.SetColumn(context, 1);
-            Grid.SetColumnSpan(context, 5);
-            grid.Children.Add(context);
+                TextBlock totalAmount = new TextBlock();
+                totalAmount.Text = "amount";
+                totalAmount.HorizontalAlignment = HorizontalAlignment.Left;
+                totalAmount.VerticalAlignment = VerticalAlignment.Bottom;
+                Grid.SetRow(totalAmount, 1);
+                Grid.SetColumn(totalAmount, 4);
+                grid.Children.Add(totalAmount);
 
-            return grid;
+                SolidColorBrush scb = new SolidColorBrush();
+                scb.Opacity = 50;
+                Button plus = new Button();
+                plus.Content = new Image
+                {
+                    Source = new BitmapImage(new Uri("ms-appx:///Assets/add.png")),
+                    Stretch = Stretch.Fill
+                };
+                plus.Background = scb;
+                plus.Margin = new Thickness(75, -5, 75, -5);
+                plus.HorizontalAlignment = HorizontalAlignment.Center;
+                plus.VerticalAlignment = VerticalAlignment.Center;
+                Grid.SetColumn(plus, 4);
+                Grid.SetRow(plus, 15);
+                grid.Children.Add(plus);
+
+                Grid context = new Grid();
+                createColumns(context, 3);
+                createRows(context, 10);
+                createContext(context);
+                Grid.SetRow(context, 3);
+                Grid.SetRowSpan(context, 10);
+                Grid.SetColumn(context, 1);
+                Grid.SetColumnSpan(context, 5);
+                grid.Children.Add(context);
+                Grid.SetColumn(grid, 1);
+                grid2.Children.Add(grid);
+                grid2.Children.Add(grid1);
+                objPool.setObjectState("Portfolio", grid2);
+            }
+            else
+            {
+                grid2 = objPool.getState("Portfolio");
+                grid2.Children.Remove(grid1);
+                grid2.Children.Add(grid1);
+            }
+            current = grid2;
+            return current;
         }
     }
 }
