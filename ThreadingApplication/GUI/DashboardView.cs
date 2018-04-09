@@ -15,8 +15,10 @@ namespace ThreadingApplication
 {
     class DashboardView : StateView
     {
+        Dashboard dashboard;
         public DashboardView()
         {
+            dashboard = db.loadDashboard("MyDashboard");
         }
         
         private void showCharts(Grid grid)
