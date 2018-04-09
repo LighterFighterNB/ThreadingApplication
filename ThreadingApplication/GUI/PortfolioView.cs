@@ -67,7 +67,7 @@ namespace ThreadingApplication
             }
         }
 
-        private Grid createPlusDashboard()
+        private Grid createPlusPortfolio()
         {
             Grid grid = new Grid();
             grid.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 150, 180, 255));
