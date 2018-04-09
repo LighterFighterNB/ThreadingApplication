@@ -115,13 +115,13 @@ namespace ThreadingApplication
             createColumns(grid2, 5);
             RowDefinition rowDefinition = new RowDefinition();
             rowDefinition.Height = new GridLength(1, GridUnitType.Star);
-           // RowDefinition rowDefinition1 = new RowDefinition();
-           // rowDefinition1.Height = new GridLength(1, GridUnitType.Star);
             RowDefinition rowDefinition2 = new RowDefinition();
             rowDefinition2.Height = new GridLength(10, GridUnitType.Star);
+            RowDefinition rowDefinition1 = new RowDefinition();
+            rowDefinition1.Height = new GridLength(1, GridUnitType.Star);
             grid2.RowDefinitions.Add(rowDefinition);
-           // grid2.RowDefinitions.Add(rowDefinition1);
             grid2.RowDefinitions.Add(rowDefinition2);
+            grid2.RowDefinitions.Add(rowDefinition1);
 
             Grid.SetColumn(grid2, 1);
             Grid.SetColumn(title, 2);
@@ -140,7 +140,28 @@ namespace ThreadingApplication
             Grid.SetColumnSpan(sv, 3);
             Grid.SetRow(sv, 1);
             grid2.Children.Add(sv);
+            SolidColorBrush scb = new SolidColorBrush();
+            scb.Opacity = 50;
+            Button plus = new Button();
+            plus.Content = new Image
+            {
+                Source = new BitmapImage(new Uri("ms-appx:///Assets/add.png")),
+                Stretch = Stretch.Fill
+            };
+            plus.Background = scb;
+            plus.Margin = new Thickness(75, -5, 75, -5);
+            plus.HorizontalAlignment = HorizontalAlignment.Center;
+            plus.VerticalAlignment = VerticalAlignment.Center;
+            plus.Click += delegate (object sender, RoutedEventArgs e)
+            {
+                //viewer.setCurrentView(new AddNewItemView());
+                //current = viewer.getCurrentView().getView(viewer, objPool);
+                //viewer.updateMain();
+            };
+            Grid.SetRow(plus, 2);
+            Grid.SetColumn(plus, 3);
 
+            grid2.Children.Add(plus);
 
             grid.Children.Add(grid2);
             grid.Children.Add(grid1);

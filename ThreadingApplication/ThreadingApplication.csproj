@@ -108,6 +108,7 @@
     <Compile Include="GUI\ChatView.cs" />
     <Compile Include="Elements\Dashboard.cs" />
     <Compile Include="GUI\ConverterView.cs" />
+    <Compile Include="GUI\DashboardItemView.cs" />
     <Compile Include="GUI\DashboardView.cs" />
     <Compile Include="Elements\Element.cs" />
     <Compile Include="GUI\Graph.cs" />
