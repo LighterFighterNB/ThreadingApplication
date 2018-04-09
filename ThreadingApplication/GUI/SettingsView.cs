@@ -12,9 +12,10 @@ namespace ThreadingApplication.GUI
 {
     class SettingsView : StateView
     {
+        Preference preference;
         public SettingsView()
         {
-
+            preference = db.loadPreferences();
         }
         public override Grid getView(ViewManager viewer, ObjectPool objPool)
         {
@@ -40,8 +41,6 @@ namespace ThreadingApplication.GUI
                 ColumnDefinition col1 = new ColumnDefinition();
                 col1.Width = new GridLength(20, GridUnitType.Star);
                 grid.ColumnDefinitions.Add(col1);
-
-
 
                 Grid g = new Grid();
                 createColumns(g, 20);
@@ -70,7 +69,7 @@ namespace ThreadingApplication.GUI
                 preferedCurrency.Items.Add("SGD");
                 preferedCurrency.Items.Add("ZAR");
                 preferedCurrency.Items.Add("CNY");
-                preferedCurrency.SelectedIndex = 0;
+                preferedCurrency.SelectedItem = preference.getPreference("currency");
                 Grid.SetColumn(preferedCurrency, 12);
                 Grid.SetRow(preferedCurrency, 6);
                 Grid.SetColumnSpan(preferedCurrency, 6);
@@ -84,10 +83,10 @@ namespace ThreadingApplication.GUI
                 Grid.SetRowSpan(blockTheme, 2);
 
                 ComboBox preferedTheme = new ComboBox();
-                preferedTheme.Items.Add("White");
+                preferedTheme.Items.Add("Light");
                 preferedTheme.Items.Add("Classic");
                 preferedTheme.Items.Add("Dark");
-                preferedTheme.SelectedIndex = 0;
+                preferedTheme.SelectedItem = preference.getPreference("displayType");
                 Grid.SetColumn(preferedTheme, 12);
                 Grid.SetRow(preferedTheme, 9);
                 Grid.SetColumnSpan(preferedTheme, 6);
@@ -107,6 +106,15 @@ namespace ThreadingApplication.GUI
                 }; ;
                 button3.FontSize = 15;
                 button3.Background = brush;
+                button3.Click += delegate (object sender, RoutedEventArgs e)
+                {
+                    preference.changePreference("currency", preferedCurrency.SelectedItem.ToString());
+                    preference.changePreference("displayType", preferedTheme.SelectedItem.ToString());
+                    db.savePreferences(preference);
+                    viewer.setCurrentView(viewer.getNextView());
+                    current = viewer.getCurrentView().getView(viewer, objPool);
+                    viewer.updateMain();
+                };
                 Grid.SetColumn(button3, 4);
                 Grid.SetRow(button3, 12);
                 Grid.SetColumnSpan(button3, 2);
