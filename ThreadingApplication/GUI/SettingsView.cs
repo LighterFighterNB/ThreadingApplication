@@ -112,7 +112,7 @@ namespace ThreadingApplication.GUI
                     preference.changePreference("displayType", preferedTheme.SelectedItem.ToString());
                     db.savePreferences(preference);
                     viewer.setCurrentView(viewer.getNextView());
-                    current = viewer.getCurrentView().getView(viewer, objPool);
+                    //current = viewer.getCurrentView().getView(viewer, objPool);
                     viewer.updateMain();
                 };
                 Grid.SetColumn(button3, 4);

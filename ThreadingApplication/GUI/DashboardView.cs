@@ -23,12 +23,12 @@ namespace ThreadingApplication
             dashboard = db.loadDashboard("MyDashboard");
         }
 
-        private async void displayData(Grid grid, ViewManager viewer)
+        private async void displayData(Grid grid, ViewManager viewer, ChartObjectPool chartPool)
         {
             dashboard = db.loadDashboard("MyDashboard");
             if (dashboard.getCharts().Count < 5)
             {
-                for(int k = 0; k < 15; k++)
+                for (int k = 0; k < 15; k++)
                 {
                     RowDefinition row = new RowDefinition();
                     row.Height = new GridLength(20);
@@ -90,29 +90,52 @@ namespace ThreadingApplication
                 grid.Children.Add(ownedTitle);
                 ownedTitle.VerticalAlignment = VerticalAlignment.Top;
                 TextBlock value = new TextBlock();
-
-                int p = 0;
-                while(chart.getLastStock() == null && p < 20)
+                if (chartPool.getChart(chart.getName()) == null)
                 {
-                    await Task.Delay(TimeSpan.FromSeconds(1));
-                    p++;
-                }
-
-                if (chart.getLastStock() != null)
-                {
-                    foreach (KeyValuePair<String, String> propriety in chart.getLastStock().Proprieties)
+                    int p = 0;
+                    while (chart.getLastStock() == null && p < 20)
                     {
-                        if (propriety.Key.Contains("close"))
+                        await Task.Delay(TimeSpan.FromSeconds(1));
+                        p++;
+                    }
+
+                    if (chart.getLastStock() != null)
+                    {
+                        foreach (KeyValuePair<String, String> propriety in chart.getLastStock().Proprieties)
                         {
-                            value.Text = propriety.Value;
-                            chart.resetChart();
-                            break;
+                            if (propriety.Key.Contains("close"))
+                            {
+                                value.Text = propriety.Value;
+                                chartPool.setChart(chart.getName(), chart);
+                                chart.resetChart();
+                                break;
+                            }
                         }
+                    }
+                    else
+                    {
+                        //createErrorMessage("Something went wrong with reading from API");
                     }
                 }
                 else
                 {
-                    //createErrorMessage("Something went wrong with reading from API");
+                    try
+                    {
+                        foreach (KeyValuePair<String, String> propriety in chartPool.getChart(chart.getName()).getLastStock().Proprieties)
+                        {
+                            if (propriety.Key.Contains("close"))
+                            {
+                                value.Text = propriety.Value;
+                                chartPool.setChart(chart.getName(), chart);
+                                chart.resetChart();
+                                break;
+                            }
+                        }
+                    }
+                    catch(Exception)
+                    {
+
+                    }
                 }
                 Grid.SetRow(value, i * 3);
                 Grid.SetColumn(value, 2);
@@ -172,7 +195,7 @@ namespace ThreadingApplication
             //    displayData(data);
             //});
             //t.Start();
-            displayData(data,viewer);
+            displayData(data,viewer,chartPool);
             sv.Content = data;
 
             Grid.SetColumn(sv, 1);
@@ -194,7 +217,7 @@ namespace ThreadingApplication
             plus.Click += delegate (object sender, RoutedEventArgs e)
             {
                 viewer.setCurrentView(new DashboardItemView());
-                current = viewer.getCurrentView().getView(viewer, objPool);
+               // current = viewer.getCurrentView().getView(viewer, objPool);
                 viewer.updateMain();
             };
             Grid.SetRow(plus, 2);

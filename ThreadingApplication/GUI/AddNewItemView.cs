@@ -99,7 +99,7 @@ namespace ThreadingApplication.GUI
                 {
                     db.addCurrency("MyPortfolio", currency.SelectedItem.ToString(), Convert.ToDouble(owned.Text.ToString()));
                     viewer.setCurrentView(new PortfolioView());
-                    current = viewer.getCurrentView().getView(viewer, objPool);
+                    //current = viewer.getCurrentView().getView(viewer, objPool);
                     viewer.updateMain();
                 }
             }; 
@@ -115,7 +115,7 @@ namespace ThreadingApplication.GUI
             cancel.Click += delegate (object sender, RoutedEventArgs e)
             {
                     viewer.setCurrentView(new PortfolioView());
-                    current = viewer.getCurrentView().getView(viewer, objPool);
+                   // current = viewer.getCurrentView().getView(viewer, objPool);
                     viewer.updateMain();
             };
 

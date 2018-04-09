@@ -110,7 +110,7 @@ namespace ThreadingApplication.GUI
                         db.addDefaultPreferences();
                         db.logout();
                         viewer.setCurrentView(new LoginView());
-                        current = viewer.getCurrentView().getView(viewer, objPool);
+                       // current = viewer.getCurrentView().getView(viewer, objPool);
                         viewer.updateMain();
                     }
                 };
@@ -126,7 +126,7 @@ namespace ThreadingApplication.GUI
                 cancel.Click += delegate (object sender, RoutedEventArgs e)
                 {
                     viewer.setCurrentView(new LoginView());
-                    current = viewer.getCurrentView().getView(viewer, objPool);
+                    //current = viewer.getCurrentView().getView(viewer, objPool);
                     viewer.updateMain();
                 };
                 objPool.setObjectState("Signup", grid);

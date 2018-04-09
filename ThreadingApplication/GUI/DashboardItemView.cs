@@ -132,7 +132,7 @@ namespace ThreadingApplication.GUI
             add.Click += delegate (object sender, RoutedEventArgs e)
             {
                 viewer.setCurrentView(new DashboardView());
-                current = viewer.getCurrentView().getView(viewer, objPool);
+                //current = viewer.getCurrentView().getView(viewer, objPool);
                 viewer.updateMain();
             };
 

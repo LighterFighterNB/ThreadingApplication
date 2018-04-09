@@ -100,7 +100,7 @@ namespace ThreadingApplication
                 {
 
                     viewer.setCurrentView(new SignupView());
-                    current = viewer.getCurrentView().getView(viewer, objPool);
+                   // current = viewer.getCurrentView().getView(viewer, objPool);
                     viewer.updateMain();
                 };
                 manager = viewer;

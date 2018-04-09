@@ -165,7 +165,7 @@ namespace ThreadingApplication
             plus.Click += delegate (object sender, RoutedEventArgs e)
             {
                 viewer.setCurrentView(new AddNewItemView());
-                current = viewer.getCurrentView().getView(viewer, objPool);
+                //current = viewer.getCurrentView().getView(viewer, objPool);
                 viewer.updateMain();
             };
             Grid.SetColumn(plus, 4);

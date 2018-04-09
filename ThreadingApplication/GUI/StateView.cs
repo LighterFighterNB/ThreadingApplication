@@ -77,22 +77,22 @@ namespace ThreadingApplication
                     {
                         case "Dashboard":
                             viewer.setCurrentView(new DashboardView());
-                            current = viewer.getCurrentView().getView(viewer,objPool);
+                            //current = viewer.getCurrentView().getView(viewer,objPool);
                             viewer.updateMain();
                             break;
                         case "Converter":
                             viewer.setCurrentView(new ConverterView());
-                            current = viewer.getCurrentView().getView(viewer, objPool);
+                           // current = viewer.getCurrentView().getView(viewer, objPool);
                             viewer.updateMain();
                             break;
                         case "Profile":
                             viewer.setCurrentView(new PortfolioView());
-                            current = viewer.getCurrentView().getView(viewer, objPool);
+                           // current = viewer.getCurrentView().getView(viewer, objPool);
                             viewer.updateMain();
                             break;
                         case "Settings":
                             viewer.setCurrentView(new SettingsView());
-                            current = viewer.getCurrentView().getView(viewer, objPool);
+                           // current = viewer.getCurrentView().getView(viewer, objPool);
                             viewer.updateMain();
                             break;
                     }
