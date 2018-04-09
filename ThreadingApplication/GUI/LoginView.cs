@@ -17,9 +17,6 @@ namespace ThreadingApplication
         }
         public override Grid getView(ViewManager viewer, ObjectPool objPool)
         {
-            viewer.setCurrentView(new LoginView());
-            viewer.setNextView(new DashboardView());
-            viewer.setPreviousView(new SignupView());
             if (!isCreated && objPool.getState("Login") == null)
             {
                 isCreated = !isCreated;
@@ -85,8 +82,8 @@ namespace ThreadingApplication
                     bool isCorrect = db.checkUser(userEmail.Text, password.Password.ToString());
                     if (isCorrect)
                     {
-                        viewer.setCurrentView(viewer.getNextView());
-                        current = viewer.getCurrentView().getView(viewer, objPool);
+                        viewer.setCurrentView(new DashboardView());
+                       // current = viewer.getCurrentView().getView(viewer, objPool);
                         viewer.updateMain();
                     }
                 };
@@ -102,7 +99,7 @@ namespace ThreadingApplication
                 signup.Click += delegate (object sender, RoutedEventArgs e)
                 {
 
-                    viewer.setCurrentView(viewer.getPerviousView());
+                    viewer.setCurrentView(new SignupView());
                     current = viewer.getCurrentView().getView(viewer, objPool);
                     viewer.updateMain();
                 };

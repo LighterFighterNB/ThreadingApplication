@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ThreadingApplication.Elements;
 using ThreadingApplication.GUI;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -20,11 +22,30 @@ namespace ThreadingApplication
         {
             dashboard = db.loadDashboard("MyDashboard");
         }
-     
-        private void displayData(Grid grid)
-        {
 
+        private async void displayData(Grid grid, ViewManager viewer)
+        {
             dashboard = db.loadDashboard("MyDashboard");
+            if (dashboard.getCharts().Count < 5)
+            {
+                for(int k = 0; k < 15; k++)
+                {
+                    RowDefinition row = new RowDefinition();
+                    row.Height = new GridLength(20);
+                    grid.RowDefinitions.Add(row);
+                }
+            }
+            else
+            {
+                createRows(grid, (dashboard.getCharts().Count + 1) * 3);
+
+                for (int k = 0; k < (dashboard.getCharts().Count + 1) * 3; k++)
+                {
+                    RowDefinition row = new RowDefinition();
+                    row.Height = new GridLength(20);
+                    grid.RowDefinitions.Add(row);
+                }
+            }
             TextBlock nameTitle = new TextBlock();
             nameTitle.Text = "Chart Name";
             Grid.SetRow(nameTitle, 0);
@@ -43,65 +64,77 @@ namespace ThreadingApplication
             Grid.SetColumn(valueTitle, 2);
             grid.Children.Add(valueTitle);
 
-            int i = 0;
-            foreach(Chart chart in dashboard.getCharts())
-            {
-                Task t = new Task(async () => { 
-                    TextBlock name = new TextBlock();
-                    nameTitle.Text = chart.getName();
-                    Grid.SetRow(nameTitle, 0);
-                    Grid.SetColumn(nameTitle, 0);
-                    grid.Children.Add(nameTitle);
+            Debug.WriteLine(dashboard.getCharts().Count);
 
-                    TextBlock ownedTitle = new TextBlock();
-                    ownedTitle.Text = chart.getFrom();
-                    Grid.SetRow(ownedTitle, 0);
-                    Grid.SetColumn(ownedTitle, 1);
-                    grid.Children.Add(ownedTitle);
-                    await chart.setStock();
-                    TextBlock value = new TextBlock();
-                    int p = 0;
-                    while(chart.getLastStock() == null && p < 5)
+            dashboard.update();
+            int i = 1;
+            foreach (Chart chart in dashboard.getCharts())
+            {
+                Button name = new Button();
+                name.Content = chart.getName();
+                Grid.SetRow(name, i * 3);
+                Grid.SetColumn(name, 0);
+                grid.Children.Add(name);
+                name.VerticalAlignment = VerticalAlignment.Top;
+                name.Click += delegate (object sender, RoutedEventArgs e)
+                {
+                    viewer.setCurrentView(new ChartView(chart));
+                    //current = viewer.getCurrentView().getView(viewer, objPool);
+                    viewer.updateMain();
+                };
+
+                TextBlock ownedTitle = new TextBlock();
+                ownedTitle.Text = chart.getFrom();
+                Grid.SetRow(ownedTitle, i * 3);
+                Grid.SetColumn(ownedTitle, 1);
+                grid.Children.Add(ownedTitle);
+                ownedTitle.VerticalAlignment = VerticalAlignment.Top;
+                TextBlock value = new TextBlock();
+
+                int p = 0;
+                while(chart.getLastStock() == null && p < 20)
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(1));
+                    p++;
+                }
+
+                if (chart.getLastStock() != null)
+                {
+                    foreach (KeyValuePair<String, String> propriety in chart.getLastStock().Proprieties)
                     {
-                        await Task.Delay(TimeSpan.FromSeconds(1));
-                        p++;
-                    }
-                    if (p < 4)
-                    {
-                        foreach (KeyValuePair<String, String> propriety in chart.getLastStock().Proprieties)
+                        if (propriety.Key.Contains("close"))
                         {
-                            if (propriety.Key.Contains("close"))
-                            {
-                                value.Text = propriety.Value;
-                                break;
-                            }
+                            value.Text = propriety.Value;
+                            chart.resetChart();
+                            break;
                         }
                     }
-                    else
-                    {
-                        createErrorMessage("Something went wrong with reading from API");
-                    }
-                    Grid.SetRow(value, 0);
-                    Grid.SetColumn(value, 2);
-                    grid.Children.Add(value);
-                });
-                t.Start();
+                }
+                else
+                {
+                    //createErrorMessage("Something went wrong with reading from API");
+                }
+                Grid.SetRow(value, i * 3);
+                Grid.SetColumn(value, 2);
+                value.VerticalAlignment = VerticalAlignment.Top;
+                grid.Children.Add(value);
+                i++;
             }
         }
 
         public override Grid getView(ViewManager viewer, ObjectPool objPool)
         {
+            dashboard = db.loadDashboard("MyDashboard");
             TextBlock title = new TextBlock();
             title.Text = "My Dashboard";
             title.FontSize = 23;
-            Grid grid;
+            Grid grid = new Grid();
             Grid grid1 = new Grid();
             grid1.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 150, 180, 250));
             createColumns(grid1, 2);
             createRows(grid1, 25);
             createMenu(grid1, viewer, objPool);
             Grid.SetColumn(grid1, 0);
-            grid = new Grid();
             grid.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 184, 197, 219));
             ColumnDefinition col = new ColumnDefinition();
             col.Width = new GridLength(1, GridUnitType.Star);
@@ -133,7 +166,13 @@ namespace ThreadingApplication
 
             Grid data = new Grid();
             createColumns(data, 3);
-            displayData(data);
+
+            //Task t = new Task(() =>
+            //{
+            //    displayData(data);
+            //});
+            //t.Start();
+            displayData(data,viewer);
             sv.Content = data;
 
             Grid.SetColumn(sv, 1);
@@ -165,7 +204,6 @@ namespace ThreadingApplication
 
             grid.Children.Add(grid2);
             grid.Children.Add(grid1);
-            objPool.setObjectState("Dashboard", grid);
             current = grid;
             return current;
         }

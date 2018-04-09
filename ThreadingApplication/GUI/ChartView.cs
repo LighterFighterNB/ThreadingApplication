@@ -12,20 +12,23 @@ using WinRTXamlToolkit.Controls.DataVisualization.Charting;
 
 namespace ThreadingApplication
 {
-    class ChatView : StateView
+    class ChartView : StateView
     {
-        private void showCharts(Grid grid)
+        Chart c;
+        public ChartView(Chart c)
         {
-
-            List<Stock> listStock = new List<Stock>();
-            for (int i = 0; i < 10; i++)
-            {
-                Stock stock = new Stock("2018-04-0" + i);
-                stock.Proprieties.Add("2a. high (CNY)", "4661" + i + ".45295800");
-                stock.Proprieties.Add("3a. low (CNY)", "4295" + i + ".27506900");
-                stock.Proprieties.Add("4a. close (CNY)", "4300" + i + ".13619260");
-                listStock.Add(stock);
-            }
+            this.c = c;
+        }
+        private async void showCharts(Grid grid)
+        {
+            await c.setStock();
+            //int p = 0;
+            //while (c.getLastStock() == null && p < 20)
+            //{
+            //    await Task.Delay(TimeSpan.FromSeconds(1));
+            //    p++;
+            //}
+            List<Stock> listStock = c.Stocks;
             LoadChartContents(listStock, grid);
         }
 
@@ -82,7 +85,7 @@ namespace ThreadingApplication
                 grid.ColumnDefinitions.Add(col1);
 
                 Grid grid2 = new Grid();
-                createColumns(grid2, 2);
+                createColumns(grid2, 1);
                 createRows(grid2, 1);
                 showCharts(grid2);
                 Grid.SetColumn(grid2, 1);

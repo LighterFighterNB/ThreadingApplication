@@ -21,10 +21,6 @@ namespace ThreadingApplication.GUI
 
         public override Grid getView(ViewManager viewer, ObjectPool objPool)
         {
-            viewer.setCurrentView(this);
-            viewer.setNextView(new LoginView());
-            viewer.setPreviousView(new LoginView());
-
             if (!isCreated && objPool.getState("Signup") == null)
             {
                 isCreated = !isCreated;
@@ -113,7 +109,7 @@ namespace ThreadingApplication.GUI
                         db.addPortfolio("MyPortfolio");
                         db.addDefaultPreferences();
                         db.logout();
-                        viewer.setCurrentView(viewer.getNextView());
+                        viewer.setCurrentView(new LoginView());
                         current = viewer.getCurrentView().getView(viewer, objPool);
                         viewer.updateMain();
                     }
@@ -129,7 +125,7 @@ namespace ThreadingApplication.GUI
                 grid.Children.Add(cancel);
                 cancel.Click += delegate (object sender, RoutedEventArgs e)
                 {
-                    viewer.setCurrentView(viewer.getNextView());
+                    viewer.setCurrentView(new LoginView());
                     current = viewer.getCurrentView().getView(viewer, objPool);
                     viewer.updateMain();
                 };

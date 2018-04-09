@@ -56,7 +56,7 @@ namespace ThreadingApplication.Elements
                             JObject body = (JObject)o[bodyTag];
                             foreach (JProperty p in body.Properties())
                             {
-                                Debug.WriteLine("\"" + p.Name + "\"" + " : " + p.Value);
+                               // Debug.WriteLine("\"" + p.Name + "\"" + " : " + p.Value);
                                 JObject propriety = JObject.Parse(p.Value.ToString());
                                 if (p.Name.Contains("2018"))
                                 {

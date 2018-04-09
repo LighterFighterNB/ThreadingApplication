@@ -36,7 +36,8 @@ namespace ThreadingApplication
         }
 
         public async Task setStock()
-        { 
+        {
+            alphaManager = alphaFactory.getApiRequest(function, from, to);
             await alphaManager.setStocks();
             stocks = new List<Stock>();
             stocks = alphaManager.getStocks();
@@ -56,6 +57,11 @@ namespace ThreadingApplication
             {
                 return null;
             }
+        }
+
+        public void resetChart()
+        {
+            alphaManager = null;
         }
         
         public string getName()

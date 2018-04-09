@@ -28,7 +28,7 @@ namespace ThreadingApplication
             return charts;
         }
 
-        private async void update()
+        public async void update()
         {
             foreach(Chart chart in charts)
             {

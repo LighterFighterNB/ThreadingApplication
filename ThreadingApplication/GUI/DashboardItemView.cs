@@ -11,14 +11,17 @@ namespace ThreadingApplication.GUI
 {
     class DashboardItemView : StateView
     {
-        private TextBox chartName = new TextBox();
+        public DashboardItemView()
+        {
+            preference = db.loadPreferences();
+        }
 
         private async void add_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(chartName.Text))
-            {
-                createErrorMessage("The chart name is not valid");
-            }
+            //if (string.IsNullOrWhiteSpace(chartName.Text))
+            //{
+            //    createErrorMessage("The chart name is not valid");
+            //}
         }
 
         private async void cancel_Click(object sender, RoutedEventArgs e)
@@ -28,6 +31,7 @@ namespace ThreadingApplication.GUI
         public override Grid getView(ViewManager viewer, ObjectPool objPool)
         {
             Grid grid = new Grid();
+            TextBox chartName = new TextBox();
             grid.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 184, 197, 219));
             createColumns(grid, 4);
             createRows(grid, 7);
@@ -103,7 +107,20 @@ namespace ThreadingApplication.GUI
             Grid.SetRow(add, 5);
             Grid.SetColumn(add, 1);
             grid.Children.Add(add);
-            add.Click += add_Click;
+            add.Click += delegate (object sender, RoutedEventArgs e)
+            {
+                if (string.IsNullOrWhiteSpace(chartName.Text) || chartName.Text.Length == 0)
+                {
+                    createErrorMessage("The chart name is not valid");
+                }
+                else
+                {
+                    db.addChart("MyDashboard", chartName.Text, currency.SelectedItem.ToString(), preference.getPreference("currency"), rate.SelectedItem.ToString());
+                    viewer.setCurrentView(new DashboardView());
+                    //current = viewer.getCurrentView().getView(viewer, objPool);
+                    viewer.updateMain();
+                }
+            };
 
             Button cancel = new Button();
             cancel.Content = "Cancel";
@@ -112,9 +129,15 @@ namespace ThreadingApplication.GUI
             Grid.SetRow(cancel, 5);
             Grid.SetColumn(cancel, 2);
             grid.Children.Add(cancel);
-            add.Click += cancel_Click;
+            add.Click += delegate (object sender, RoutedEventArgs e)
+            {
+                viewer.setCurrentView(new DashboardView());
+                current = viewer.getCurrentView().getView(viewer, objPool);
+                viewer.updateMain();
+            };
 
-            return grid;
+            current = grid;
+            return current;
         }
     }
 }

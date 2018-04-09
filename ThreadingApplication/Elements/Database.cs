@@ -149,7 +149,7 @@ namespace ThreadingApplication
             try
             {
                 email = localSettings.Values["email"].ToString();
-                cmd.CommandText = "INSERT INTO `chart`(`dashboardName`, `name`,`fromCur`,`toMark`,`refreshRate`,`email`) VALUES ('" + dashboard + "','" + name + "','" + fromCur + "','" + toMarket + "','" + refreshRate + "','" + email + "')";
+                cmd.CommandText = "INSERT INTO `chart`(`dashboard`, `name`,`fromCur`,`toMark`,`refreshRate`,`email`) VALUES ('" + dashboard + "','" + name + "','" + fromCur + "','" + toMarket + "','" + refreshRate + "','" + email + "')";
                 cmd.ExecuteNonQuery();
             }
             catch (Exception ex)

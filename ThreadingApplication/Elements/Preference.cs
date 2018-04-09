@@ -31,7 +31,13 @@ namespace ThreadingApplication
 
         public void addPreference(string name, string value)
         {
-            preferences.Add(name, value);
+            try
+            {
+                changePreference(name, value);
+            }catch(Exception)
+            {
+                preferences.Add(name, value);
+            }
         }
     }
 }

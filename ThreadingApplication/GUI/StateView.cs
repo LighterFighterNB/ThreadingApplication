@@ -19,6 +19,7 @@ namespace ThreadingApplication
         protected Database db = new Database();
         protected ViewManager manager;
         protected bool isCreated = false;
+        protected Preference preference = new Preference();
         public abstract Grid getView(ViewManager viewer, ObjectPool objPool);
         protected Grid current;
 

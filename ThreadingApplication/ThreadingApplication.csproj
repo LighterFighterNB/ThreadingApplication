@@ -105,7 +105,8 @@
     <Compile Include="Elements\Preference.cs" />
     <Compile Include="Elements\Stock.cs" />
     <Compile Include="GUI\AddNewItemView.cs" />
-    <Compile Include="GUI\ChatView.cs" />
+    <Compile Include="GUI\ChartObjectPull.cs" />
+    <Compile Include="GUI\ChartView.cs" />
     <Compile Include="Elements\Dashboard.cs" />
     <Compile Include="GUI\ConverterView.cs" />
     <Compile Include="GUI\DashboardItemView.cs" />
