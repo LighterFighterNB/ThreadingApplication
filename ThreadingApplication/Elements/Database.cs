@@ -56,12 +56,13 @@ namespace ThreadingApplication
         public bool checkUser(string email, string password)
         {
             bool success = false;
+            MySqlDataReader mySqlDataReader = null;
             try
             {
                 cmd.CommandText = "SELECT `password` FROM `user` WHERE `email` = '" + email + "'";
-                MySqlDataReader mySqlDataReader = cmd.ExecuteReader();
+                mySqlDataReader = cmd.ExecuteReader();
                 mySqlDataReader.Read();
-                if (mySqlDataReader.GetValue(0).Equals(password))
+                if (mySqlDataReader.HasRows && mySqlDataReader.GetValue(0).Equals(password))
                 {
                     success = true;
                     localSettings.Values["email"] = email;
@@ -71,6 +72,7 @@ namespace ThreadingApplication
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
+                mySqlDataReader.Close();
             }
             return success;
         }
