@@ -17,7 +17,8 @@ namespace ThreadingApplication
         private AlphaManager api;
         private Database db;
         protected ViewManager manager;
-        public abstract Grid getView(ViewManager viewer);
+        protected bool isCreated = false;
+        public abstract Grid getView(ViewManager viewer, ObjectPool objPool);
         protected Grid current;
 
         protected void createColumns(Grid grid, int columnsNumber)
@@ -40,7 +41,7 @@ namespace ThreadingApplication
             }
         }
 
-        protected void createMenu(Grid grid, ViewManager viewer)
+        protected void createMenu(Grid grid, ViewManager viewer, ObjectPool objPool)
         {
             Dictionary<string, string> imgs = new Dictionary<string, string>();
             imgs.Add("Dashboard", "home.png");
@@ -68,22 +69,22 @@ namespace ThreadingApplication
                     {
                         case "Dashboard":
                             viewer.setCurrentView(new DashboardView());
-                            current = viewer.getCurrentView().getView(viewer);
+                            current = viewer.getCurrentView().getView(viewer,objPool);
                             viewer.updateMain();
                             break;
                         case "Converter":
                             viewer.setCurrentView(new ConverterView());
-                            current = viewer.getCurrentView().getView(viewer);
+                            current = viewer.getCurrentView().getView(viewer, objPool);
                             viewer.updateMain();
                             break;
                         case "Profile":
                             viewer.setCurrentView(new PortfolioView());
-                            current = viewer.getCurrentView().getView(viewer);
+                            current = viewer.getCurrentView().getView(viewer, objPool);
                             viewer.updateMain();
                             break;
                         case "Settings":
                             viewer.setCurrentView(new SettingsView());
-                            current = viewer.getCurrentView().getView(viewer);
+                            current = viewer.getCurrentView().getView(viewer, objPool);
                             viewer.updateMain();
                             break;
                     }

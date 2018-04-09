@@ -64,33 +64,42 @@ namespace ThreadingApplication
             grid.Children.Add(chart);
         }
 
-        public override Grid getView(ViewManager viewer)
+        public override Grid getView(ViewManager viewer, ObjectPool objPool)
         {
-
-            Grid grid = new Grid();
-            grid.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 184, 197, 219));
-            ColumnDefinition col = new ColumnDefinition();
-            col.Width = new GridLength(1, GridUnitType.Star);
-            grid.ColumnDefinitions.Add(col);
-
-            ColumnDefinition col1 = new ColumnDefinition();
-            col1.Width = new GridLength(20, GridUnitType.Star);
-            grid.ColumnDefinitions.Add(col1);
-
+            Grid grid;
             Grid grid1 = new Grid();
             grid1.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 150, 180, 250));
             createColumns(grid1, 2);
             createRows(grid1, 25);
-            createMenu(grid1, viewer);
-            grid.Children.Add(grid1);
+            createMenu(grid1, viewer, objPool);
             Grid.SetColumn(grid1, 0);
+            if (objPool.getState("Dashboard") == null)
+            {
+                grid = new Grid();
+                grid.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 184, 197, 219));
+                ColumnDefinition col = new ColumnDefinition();
+                col.Width = new GridLength(1, GridUnitType.Star);
+                grid.ColumnDefinitions.Add(col);
 
-            Grid grid2 = new Grid();
-            createColumns(grid2, 2);
-            createRows(grid2, 1);
-            showCharts(grid2);
-            grid.Children.Add(grid2);
-            Grid.SetColumn(grid2, 1);
+                ColumnDefinition col1 = new ColumnDefinition();
+                col1.Width = new GridLength(20, GridUnitType.Star);
+                grid.ColumnDefinitions.Add(col1);
+
+                Grid grid2 = new Grid();
+                createColumns(grid2, 2);
+                createRows(grid2, 1);
+                showCharts(grid2);
+                Grid.SetColumn(grid2, 1);
+
+                grid.Children.Add(grid1);
+                grid.Children.Add(grid2);
+
+                objPool.setObjectState("Dashboard", grid);
+            } else{
+                grid = objPool.getState("Dashboard");
+                grid.Children.Remove(grid1);
+                grid.Children.Add(grid1);
+            }
             current = grid;
             return current;
         }

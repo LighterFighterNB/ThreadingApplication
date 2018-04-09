@@ -111,6 +111,7 @@
     <Compile Include="Elements\Element.cs" />
     <Compile Include="GUI\Graph.cs" />
     <Compile Include="GUI\LoginView.cs" />
+    <Compile Include="GUI\ObjectPool.cs" />
     <Compile Include="GUI\SettingsView.cs" />
     <Compile Include="GUI\SignupView.cs" />
     <Compile Include="GUI\ViewManager.cs" />

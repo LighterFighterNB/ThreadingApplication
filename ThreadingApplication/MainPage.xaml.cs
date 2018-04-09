@@ -30,12 +30,14 @@ namespace ThreadingApplication
     {
         private ViewManager mng;
         private StateView view;
+        private ObjectPool objPool;
         public MainPage()
         {
             this.InitializeComponent();
             mng = new ViewManager(this);
+            objPool = new ObjectPool();
             view = new LoginView();
-            this.Content = view.getView(mng);
+            this.Content = view.getView(mng,objPool);
             // displayResult();
         }
         public async Task displayResult()
@@ -48,7 +50,7 @@ namespace ThreadingApplication
         public void update()
         {
             Debug.WriteLine(mng.getCurrentView().ToString());
-            this.Content = mng.getCurrentView().getView(mng);
+            this.Content = mng.getCurrentView().getView(mng,objPool);
         }
 
     }

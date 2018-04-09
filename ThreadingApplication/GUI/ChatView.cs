@@ -10,7 +10,7 @@ namespace ThreadingApplication
 {
     class ChatView : StateView
     {
-        public override Grid getView(ViewManager viewer)
+        public override Grid getView(ViewManager viewer, ObjectPool objPool)
         {
             throw new NotImplementedException();
         }
