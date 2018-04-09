@@ -68,77 +68,6 @@ namespace ThreadingApplication
             }
         }
 
-        private Grid createPlusPortfolio()
-        {
-            Grid grid = new Grid();
-            grid.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 150, 180, 255));
-            createColumns(grid, 4);
-            createRows(grid, 7);
-
-            TextBlock title = new TextBlock();
-            title.Text = "Add new criptocurrency";
-            title.FontSize = 25;
-            title.HorizontalAlignment = HorizontalAlignment.Right;
-            title.VerticalAlignment = VerticalAlignment.Bottom;
-            Grid.SetRow(title, 0);
-            Grid.SetColumn(title, 1);
-            grid.Children.Add(title);
-
-            TextBlock currencyName = new TextBlock();
-            currencyName.Margin = new Thickness(5);
-            currencyName.Text = "Currency name: ";
-            currencyName.HorizontalAlignment = HorizontalAlignment.Center;
-            currencyName.VerticalAlignment = VerticalAlignment.Center;
-            Grid.SetRow(currencyName, 2);
-            Grid.SetColumn(currencyName, 1);
-            grid.Children.Add(currencyName);
-
-            currency.Margin = new Thickness(5);
-            currency.HorizontalAlignment = HorizontalAlignment.Stretch;
-            currency.VerticalAlignment = VerticalAlignment.Center;
-            Grid.SetRow(currency, 2);
-            Grid.SetColumn(currency, 2);
-            grid.Children.Add(currency);
-
-            TextBlock stock = new TextBlock();
-            stock.Margin = new Thickness(5);
-            stock.Text = "Stock: ";
-            stock.HorizontalAlignment = HorizontalAlignment.Center;
-            stock.VerticalAlignment = VerticalAlignment.Top;
-            Grid.SetRow(stock, 3);
-            Grid.SetColumn(stock, 1);
-            grid.Children.Add(stock);
-
-            owned.Margin = new Thickness(5);
-            owned.HorizontalAlignment = HorizontalAlignment.Stretch;
-            owned.VerticalAlignment = VerticalAlignment.Top;
-            Grid.SetRow(owned, 3);
-            Grid.SetColumn(owned, 2);
-            grid.Children.Add(owned);
-
-            Button add = new Button();
-            add.Content = "Add";
-            add.HorizontalAlignment = HorizontalAlignment.Left;
-            add.VerticalAlignment = VerticalAlignment.Top;
-            add.Margin = new Thickness(10);
-            Grid.SetRow(add, 4);
-            Grid.SetColumn(add, 1);
-            grid.Children.Add(add);
-            add.Click += add_Click;
-
-            Button cancel = new Button();
-            cancel.Content = "Cancel";
-            cancel.HorizontalAlignment = HorizontalAlignment.Left;
-            cancel.VerticalAlignment = VerticalAlignment.Top;
-            cancel.Margin = new Thickness(10);
-            Grid.SetRow(cancel, 4);
-            Grid.SetColumn(cancel, 2);
-            grid.Children.Add(cancel);
-            cancel.Click += cancel_Click;
-
-            return grid;
-        }
-
         private async void add_Click(object sender, RoutedEventArgs e)
         {
             String email = userBlock.Text;
@@ -147,10 +76,7 @@ namespace ThreadingApplication
                 createErrorMessage("The stock is not valid");
             }
         }
-
-        private async void cancel_Click(object sender, RoutedEventArgs e)
-        {
-        }
+        
 
         public override Grid getView(ViewManager viewer, ObjectPool objPool)
         {
@@ -233,6 +159,12 @@ namespace ThreadingApplication
                 plus.Margin = new Thickness(75, -5, 75, -5);
                 plus.HorizontalAlignment = HorizontalAlignment.Center;
                 plus.VerticalAlignment = VerticalAlignment.Center;
+                plus.Click += delegate (object sender, RoutedEventArgs e)
+                {
+                    viewer.setCurrentView(new AddNewItemView());
+                    current = viewer.getCurrentView().getView(viewer, objPool);
+                    viewer.updateMain();
+                };
                 Grid.SetColumn(plus, 4);
                 Grid.SetRow(plus, 15);
                 grid.Children.Add(plus);

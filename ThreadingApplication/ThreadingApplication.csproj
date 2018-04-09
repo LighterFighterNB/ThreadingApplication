@@ -104,6 +104,7 @@
     <Compile Include="Elements\Database.cs" />
     <Compile Include="Elements\Preference.cs" />
     <Compile Include="Elements\Stock.cs" />
+    <Compile Include="GUI\AddNewItemView.cs" />
     <Compile Include="GUI\ChatView.cs" />
     <Compile Include="Elements\Dashboard.cs" />
     <Compile Include="GUI\ConverterView.cs" />
