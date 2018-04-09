@@ -82,8 +82,7 @@ namespace ThreadingApplication
                 grid.Children.Add(login);
                 login.Click += delegate (object sender, RoutedEventArgs e)
                 {
-
-                    bool isCorrect = true;
+                    bool isCorrect = db.checkUser(userEmail.Text, password.Password.ToString());
                     if (isCorrect)
                     {
                         viewer.setCurrentView(viewer.getNextView());

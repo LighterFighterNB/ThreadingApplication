@@ -16,7 +16,7 @@ namespace ThreadingApplication
     abstract class StateView
     {
         private AlphaManager api;
-        private Database db;
+        protected Database db = new Database();
         protected ViewManager manager;
         protected bool isCreated = false;
         public abstract Grid getView(ViewManager viewer, ObjectPool objPool);

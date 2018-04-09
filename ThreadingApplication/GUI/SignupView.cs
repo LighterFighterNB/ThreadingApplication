@@ -101,10 +101,21 @@ namespace ThreadingApplication.GUI
                 grid.Children.Add(signup);
                 signup.Click += delegate (object sender, RoutedEventArgs e)
                 {
-                    String email = userBlock.Text;
+                    String email = userEmail.Text;
                     if (string.IsNullOrWhiteSpace(email) || !Regex.IsMatch(email, @"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"))
                     {
                         createErrorMessage("The email is invalid");
+                    }
+                    else
+                    {
+                        db.createUser(userEmail.Text, userName.Text, password.Password.ToString());
+                        db.addDashboard("MyDashboard");
+                        db.addPortfolio("MyPortfolio");
+                        db.addDefaultPreferences();
+                        db.logout();
+                        viewer.setCurrentView(viewer.getNextView());
+                        current = viewer.getCurrentView().getView(viewer, objPool);
+                        viewer.updateMain();
                     }
                 };
 

@@ -14,9 +14,11 @@ namespace ThreadingApplication
         private string address;
         private MySqlConnection conn;
         private MySqlCommand cmd;
+        private string email;
 
         public Database()
         {
+            email = "";
             ppp = System.Text.CodePagesEncodingProvider.Instance;
             Encoding.RegisterProvider(ppp);
             address = "server=localhost;uid=root;pwd=;database=threading_db;SslMode=None";
@@ -30,11 +32,17 @@ namespace ThreadingApplication
             conn.Close();
         }
 
+        public void logout()
+        {
+            email = "";
+        }
+
         public void createUser(string email, string user, string password)
         {
             try
             {
                 cmd.CommandText = "INSERT INTO `user`(`email`, `name`, `password`) VALUES ('" + email + "','" + user + "','" + password + "')";
+                this.email = email;
                 cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
@@ -54,6 +62,7 @@ namespace ThreadingApplication
                 if (mySqlDataReader.HasRows && mySqlDataReader.GetValue(0).Equals(password))
                 {
                     success = true;
+                    this.email = email;
                 }
             }
             catch (Exception ex)
@@ -63,7 +72,20 @@ namespace ThreadingApplication
             return success;
         }
 
-        public void savePreferences(string email, Preference preferences)
+        public void addDefaultPreferences()
+        {
+            try
+            {
+                cmd.CommandText = "INSERT INTO `preference`(`email`, `displayType`, ` currency`) VALUES ('" + email + "','Light','EUR')";
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
+
+        public void savePreferences(Preference preferences)
         {
             try
             {
@@ -80,7 +102,7 @@ namespace ThreadingApplication
             }
         }
 
-        public Preference loadPreferences(string email)
+        public Preference loadPreferences()
         {
             Preference preferances = new Preference();
             try
@@ -101,7 +123,7 @@ namespace ThreadingApplication
             return preferances;
         }
 
-        public void addDashboard(string email, string name)
+        public void addDashboard(string name)
         {
             try
             {
@@ -162,7 +184,7 @@ namespace ThreadingApplication
             }
         }
 
-        public Dashboard loadDashboard(string name, string email)
+        public Dashboard loadDashboard(string name)
         {
             Dashboard dashboard = null;
             try
@@ -183,11 +205,11 @@ namespace ThreadingApplication
             return dashboard;
         }
 
-        public void addPortfolio(string email, string name)
+        public void addPortfolio(string name)
         {
             try
             {
-                cmd.CommandText = "INSERT INTO `porfolio`(`email`, `name`) VALUES ('" + email + "','" + name + "')";
+                cmd.CommandText = "INSERT INTO `portfolio`(`email`, `name`) VALUES ('" + email + "','" + name + "')";
                 cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
