@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ThreadingApplication.Elements;
 using ThreadingApplication.GUI;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -39,6 +40,12 @@ namespace ThreadingApplication
                 row.Height = new GridLength(1, GridUnitType.Star);
                 grid.RowDefinitions.Add(row);
             }
+        }
+
+        protected async void createErrorMessage(String message)
+        {
+            var dialog = new MessageDialog(message);
+            await dialog.ShowAsync();
         }
 
         protected void createMenu(Grid grid, ViewManager viewer, ObjectPool objPool)
