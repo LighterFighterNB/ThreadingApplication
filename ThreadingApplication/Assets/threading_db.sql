@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 09, 2018 at 12:37 AM
+-- Generation Time: Apr 09, 2018 at 05:36 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.3
 
@@ -33,7 +33,8 @@ CREATE TABLE `chart` (
   `name` varchar(55) NOT NULL,
   `fromCur` varchar(30) NOT NULL,
   `toMark` varchar(30) NOT NULL,
-  `refreshRate` varchar(55) NOT NULL
+  `refreshRate` varchar(55) NOT NULL,
+  `email` varchar(55) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -45,7 +46,8 @@ CREATE TABLE `chart` (
 CREATE TABLE `currency` (
   `type` varchar(55) NOT NULL,
   `owned` double NOT NULL,
-  `portfolio` varchar(55) NOT NULL
+  `portfolio` varchar(55) NOT NULL,
+  `email` varchar(55) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -103,14 +105,17 @@ CREATE TABLE `user` (
 --
 ALTER TABLE `chart`
   ADD UNIQUE KEY `name` (`name`),
-  ADD KEY `dashboard` (`dashboard`);
+  ADD KEY `dashboard` (`dashboard`),
+  ADD KEY `email` (`email`);
 
 --
 -- Indexes for table `currency`
 --
 ALTER TABLE `currency`
+  ADD UNIQUE KEY `type_2` (`type`,`portfolio`,`email`),
   ADD KEY `type` (`type`,`portfolio`),
-  ADD KEY `portfolio` (`portfolio`);
+  ADD KEY `portfolio` (`portfolio`),
+  ADD KEY `email` (`email`);
 
 --
 -- Indexes for table `dashboard`
@@ -123,6 +128,7 @@ ALTER TABLE `dashboard`
 -- Indexes for table `portfolio`
 --
 ALTER TABLE `portfolio`
+  ADD UNIQUE KEY `name_2` (`name`,`email`),
   ADD KEY `name` (`name`,`email`),
   ADD KEY `email` (`email`);
 
