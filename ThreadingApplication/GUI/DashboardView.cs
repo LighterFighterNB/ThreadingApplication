@@ -122,7 +122,7 @@ namespace ThreadingApplication
             }
         }
 
-        public override Grid getView(ViewManager viewer, ObjectPool objPool)
+        public override Grid getView(ViewManager viewer, ObjectPool objPool, ChartObjectPool chartPool)
         {
             dashboard = db.loadDashboard("MyDashboard");
             TextBlock title = new TextBlock();

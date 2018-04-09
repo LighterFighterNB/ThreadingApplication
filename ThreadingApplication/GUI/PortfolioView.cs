@@ -83,7 +83,7 @@ namespace ThreadingApplication
         }
         
 
-        public override Grid getView(ViewManager viewer, ObjectPool objPool)
+        public override Grid getView(ViewManager viewer, ObjectPool objPool, ChartObjectPool chartPool)
         {
             Grid grid2;
             Grid grid1 = new Grid();

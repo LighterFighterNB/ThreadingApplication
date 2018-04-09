@@ -15,7 +15,7 @@ namespace ThreadingApplication
         public LoginView()
         {
         }
-        public override Grid getView(ViewManager viewer, ObjectPool objPool)
+        public override Grid getView(ViewManager viewer, ObjectPool objPool, ChartObjectPool chartPool)
         {
             if (!isCreated && objPool.getState("Login") == null)
             {

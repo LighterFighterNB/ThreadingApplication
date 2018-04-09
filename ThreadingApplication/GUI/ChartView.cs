@@ -63,7 +63,7 @@ namespace ThreadingApplication
             grid.Children.Add(chart);
         }
 
-        public override Grid getView(ViewManager viewer, ObjectPool objPool)
+        public override Grid getView(ViewManager viewer, ObjectPool objPool, ChartObjectPool chartPool)
         {
             Grid grid;
             Grid grid1 = new Grid();

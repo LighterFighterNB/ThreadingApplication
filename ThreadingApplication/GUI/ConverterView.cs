@@ -18,7 +18,7 @@ namespace ThreadingApplication.GUI
 
         }
 
-        public override Grid getView(ViewManager viewer, ObjectPool objPool)
+        public override Grid getView(ViewManager viewer, ObjectPool objPool, ChartObjectPool chartPool)
         {
             Grid grid;
             Grid converterGrid = new Grid();

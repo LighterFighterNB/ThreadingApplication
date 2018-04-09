@@ -20,7 +20,7 @@ namespace ThreadingApplication
         protected ViewManager manager;
         protected bool isCreated = false;
         protected Preference preference = new Preference();
-        public abstract Grid getView(ViewManager viewer, ObjectPool objPool);
+        public abstract Grid getView(ViewManager viewer, ObjectPool objPool, ChartObjectPool chartPool);
         protected Grid current;
 
         protected void createColumns(Grid grid, int columnsNumber)
