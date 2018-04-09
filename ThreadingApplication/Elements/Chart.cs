@@ -35,9 +35,7 @@ namespace ThreadingApplication
 
         }
 
-        public async 
-        Task
-setStock()
+        public async Task setStock()
         { 
             await alphaManager.setStocks();
             stocks = new List<Stock>();
@@ -46,6 +44,18 @@ setStock()
 
         public List<Stock> Stocks {
             get { return stocks; }
+        }
+
+        public Stock getLastStock()
+        {
+            try
+            {
+                return stocks[0];
+            }
+            catch(Exception)
+            {
+                return null;
+            }
         }
         
         public string getName()
