@@ -26,7 +26,7 @@ namespace ThreadingApplication
 
         public void changePreference(string str, string value)
         {
-            preferences.Add(str, value);
+            preferences[str] = value;
         }
 
         public void addPreference(string name, string value)

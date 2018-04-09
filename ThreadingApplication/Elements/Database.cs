@@ -16,9 +16,11 @@ namespace ThreadingApplication
         private MySqlCommand cmd;
         private string email;
 
+        private Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+        private Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+
         public Database()
         {
-            email = "";
             ppp = System.Text.CodePagesEncodingProvider.Instance;
             Encoding.RegisterProvider(ppp);
             address = "server=localhost;uid=root;pwd=;database=threading_db;SslMode=None";
@@ -59,11 +61,12 @@ namespace ThreadingApplication
                 cmd.CommandText = "SELECT `password` FROM `user` WHERE `email` = '" + email + "'";
                 MySqlDataReader mySqlDataReader = cmd.ExecuteReader();
                 mySqlDataReader.Read();
-                if (mySqlDataReader.HasRows && mySqlDataReader.GetValue(0).Equals(password))
+                if (mySqlDataReader.GetValue(0).Equals(password))
                 {
                     success = true;
-                    this.email = email;
+                    localSettings.Values["email"] = email;
                 }
+                mySqlDataReader.Close();
             }
             catch (Exception ex)
             {
@@ -89,6 +92,7 @@ namespace ThreadingApplication
         {
             try
             {
+                email = localSettings.Values["email"].ToString();
                 cmd.CommandText = "UPDATE `preference` " +
                     "SET `email` = '" + email + "'," +
                     "`displayType` = '" + preferences.getPreference("displayType") + "'," +
@@ -104,15 +108,17 @@ namespace ThreadingApplication
 
         public Preference loadPreferences()
         {
-            Preference preferances = new Preference();
+            Preference preferences = new Preference();
             try
             {
-                cmd.CommandText = "SELECT * FROM `preference` WHERE `email` = '" + email + "'";
+                email = localSettings.Values["email"].ToString();
+                cmd.CommandText = "SELECT `displayType`,` currency` FROM `preference` WHERE `email` = '" + email + "'";
                 MySqlDataReader mySqlDataReader = cmd.ExecuteReader();
-                mySqlDataReader.Read();
-                for (int i = 0; i < mySqlDataReader.FieldCount; i++)
+                while(mySqlDataReader.Read())
                 {
-                    preferances.addPreference(mySqlDataReader.GetName(i), mySqlDataReader.GetString(i));
+                    Debug.WriteLine(mySqlDataReader.GetString(0));
+                    preferences.addPreference(mySqlDataReader.GetName(0), mySqlDataReader.GetString(0));
+                    preferences.addPreference(mySqlDataReader.GetName(1), mySqlDataReader.GetString(1));
                 }
                 mySqlDataReader.Close();
             }
@@ -120,7 +126,7 @@ namespace ThreadingApplication
             {
                 Debug.WriteLine(ex.Message);
             }
-            return preferances;
+            return preferences;
         }
 
         public void addDashboard(string name)
@@ -140,7 +146,8 @@ namespace ThreadingApplication
         {
             try
             {
-                cmd.CommandText = "INSERT INTO `chart`(`dashboardName`, `name`,`fromCur`,`toMark`,`refreshRate`) VALUES ('" + dashboard + "','" + name + "','" + fromCur + "','" + toMarket + "','" + refreshRate + "')";
+                email = localSettings.Values["email"].ToString();
+                cmd.CommandText = "INSERT INTO `chart`(`dashboardName`, `name`,`fromCur`,`toMark`,`refreshRate`,`email`) VALUES ('" + dashboard + "','" + name + "','" + fromCur + "','" + toMarket + "','" + refreshRate + "','" + email + "')";
                 cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
@@ -154,7 +161,8 @@ namespace ThreadingApplication
             List<string> commands = new List<string>();
             try
             {
-                cmd.CommandText = "SELECT `fromCur`,`toMark`,`refreshRate`, `name` FROM `chart` WHERE `dashboard` = '" + dashboard.getTitle() + "'";
+                email = localSettings.Values["email"].ToString();
+                cmd.CommandText = "SELECT `fromCur`,`toMark`,`refreshRate`, `name` FROM `chart` WHERE `dashboard` = '" + dashboard.getTitle() + "'&& `email` = '" + email + "'";
                 MySqlDataReader mySqlDataReader = cmd.ExecuteReader();
                 while (mySqlDataReader.Read())
                 {
@@ -189,8 +197,9 @@ namespace ThreadingApplication
             Dashboard dashboard = null;
             try
             {
+                email = localSettings.Values["email"].ToString();
                 dashboard = new Dashboard(name);
-                cmd.CommandText = "SELECT `name`, `fromCur`, `toMark`, `refreshRate` FROM `chart` WHERE `dashboard` = '" + name + "'";
+                cmd.CommandText = "SELECT `name`, `fromCur`, `toMark`, `refreshRate` FROM `chart` WHERE `dashboard` = '" + name + "' && `email` = '" + email + "'";
                 MySqlDataReader mySqlDataReader = cmd.ExecuteReader();
                 while (mySqlDataReader.Read())
                 {
@@ -222,7 +231,8 @@ namespace ThreadingApplication
         {
             try
             {
-                cmd.CommandText = "INSERT INTO `currency`(`portfolio`, `type`,`owned`) VALUES ('" + portfolio + "','" + name + "','" + owned + "')";
+                email = localSettings.Values["email"].ToString();
+                cmd.CommandText = "INSERT INTO `currency`(`portfolio`, `type`,`owned`,`email`) VALUES ('" + portfolio + "','" + name + "','" + owned + "','" + email + "')";
                 cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
@@ -236,7 +246,8 @@ namespace ThreadingApplication
             List<string> commands = new List<string>();
             try
             {
-                cmd.CommandText = "SELECT `owned`, `name` FROM `currency` WHERE `portfolio` = '" + portfolio.getTitle() + "'";
+                email = localSettings.Values["email"].ToString();
+                cmd.CommandText = "SELECT `owned`, `name` FROM `currency` WHERE `portfolio` = '" + portfolio.getTitle() + "' && `email` = '" + email+ "'";
                 MySqlDataReader mySqlDataReader = cmd.ExecuteReader();
                 while (mySqlDataReader.Read())
                 {
@@ -269,8 +280,9 @@ namespace ThreadingApplication
             Portfolio portfolio = null;
             try
             {
+                email = localSettings.Values["email"].ToString();
                 portfolio = new Portfolio(name);
-                cmd.CommandText = "SELECT `type`, `owned` FROM `currency` WHERE `portfolio` = '" + name + "'";
+                cmd.CommandText = "SELECT `type`, `owned` FROM `currency` WHERE `portfolio` = '" + name + "' && `email` = '"+email+"'";
                 MySqlDataReader mySqlDataReader = cmd.ExecuteReader();
                 while (mySqlDataReader.Read())
                 {
@@ -283,6 +295,11 @@ namespace ThreadingApplication
                 Debug.WriteLine(ex.Message);
             }
             return portfolio;
+        }
+
+        public void setLocalSettingEmail()
+        {
+            email = localSettings.Values["email"].ToString();
         }
     }
 }
